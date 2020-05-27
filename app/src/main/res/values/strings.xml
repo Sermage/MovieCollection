@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Movie Collection</string>
+    <string name="small_poster_description">Movie poster</string>
+    <string name="sort_by_popularity">By popularity</string>
+    <string name="sort_by_rating">By rating</string>
+    <string name="favourites_menu">Favorites</string>
+    <string name="main_menu">Main</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="movie_rating">TMDb:</string>
+    <string name="release_date">Release date:</string>
+    <string name="movie_description">Overview:</string>
+    <string name="movie_title">Title:</string>
+    <string name="original_movie_title">Original title:</string>
+    <string name="add_to_favourites">Add to Favorites</string>
+    <string name="play_trailer_of_movie">Play trailer</string>
+    <string name="added_to_favourites">Added to Favorites</string>
+    <string name="deleted_from_favourites">Removed from Favorites</string>
+    <string name="video_title">Videos</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="read_more">Read more...</string>
+    <string name="read_less">Read less</string>
+    <string name="Favorites_activity_label">Watchlist</string>
+    <string name="hint_search">Search...</string>
+    <string name="search_item_title">Search</string>
+
+</resources>

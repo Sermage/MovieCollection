@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/background_darkGrey</item>
+        <item name="colorPrimaryDark">@color/background_darkGrey</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemBackground">@color/background_darkGrey</item>
+        <item name="android:textColor">@color/soft_white_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="colorControlNormal">@color/soft_white_color</item>
+
+
+    </style>
+
+    <style name="textLabelStyle">
+        <item name="android:textColor">@color/textColor_lightGrey</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="textMainStyle">
+        <item name="android:textColor">@color/soft_white_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorPrimary">@color/soft_white_color</item>
+        <item name="android:textColorSecondary">@color/soft_white_color</item>
+        <item name="android:textColorHint">@color/soft_white_color</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+</resources>
