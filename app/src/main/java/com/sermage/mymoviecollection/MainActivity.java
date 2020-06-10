@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if(page==1) {
                     viewModel.deleteAllMovies();
                     movieAdapter.clear();
+
                 }
             for(Movie movie:movies){
                 viewModel.insertMovie(movie);
