@@ -1,9 +1,8 @@
-package com.sermage.mymoviecollection;
+package com.sermage.mymoviecollection.screens.favorites;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,19 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.sermage.mymoviecollection.R;
 import com.sermage.mymoviecollection.adapters.MovieAdapter;
 import com.sermage.mymoviecollection.data.FavouriteMovie;
-import com.sermage.mymoviecollection.data.MainViewModel;
-import com.sermage.mymoviecollection.data.Movie;
+import com.sermage.mymoviecollection.pojo.Movie;
+import com.sermage.mymoviecollection.screens.movieDetails.MovieDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewFavourites;
     MovieAdapter adapter;
-    MainViewModel viewModel;
+    FavoritesViewModel viewModel;
 
 
     @Override
@@ -39,9 +39,8 @@ public class FavouritesActivity extends AppCompatActivity {
         adapter=new MovieAdapter();
         recyclerViewFavourites.setLayoutManager(new GridLayoutManager(this,2));
         recyclerViewFavourites.setAdapter(adapter);
-        viewModel= ViewModelProviders.of(this).get(MainViewModel.class);
-        LiveData<List<FavouriteMovie>> favouriteMovies=viewModel.getFavouriteMovies();
-        favouriteMovies.observe(this, new Observer<List<FavouriteMovie>>() {
+        viewModel= ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        viewModel.getFavouriteMovies().observe(this, new Observer<List<FavouriteMovie>>() {
             @Override
             public void onChanged(List<FavouriteMovie> favouriteMovies) {
                 List<Movie> movies=new ArrayList<>();
@@ -56,7 +55,7 @@ public class FavouritesActivity extends AppCompatActivity {
             @Override
             public void onClickMoviePoster(int position) {
                 Movie movie=adapter.getMovies().get(position);
-                Intent intent=new Intent(FavouritesActivity.this,MovieDetailsActivity.class);
+                Intent intent=new Intent(FavoritesActivity.this, MovieDetailsActivity.class);
                 intent.putExtra("id",movie.getId());
                 startActivity(intent);
             }

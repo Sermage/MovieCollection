@@ -1,14 +1,15 @@
-package com.sermage.mymoviecollection.data;
+package com.sermage.mymoviecollection.pojo;
 
-public class Trailer {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class Trailers {
+    @SerializedName("key")
+    @Expose
     private String key;
+    @SerializedName("name")
+    @Expose
     private String name;
-
-    public Trailer(String key, String name) {
-        this.key = key;
-        this.name = name;
-    }
 
     public String getKey() {
         return key;
@@ -25,4 +26,6 @@ public class Trailer {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

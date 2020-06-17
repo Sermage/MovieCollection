@@ -1,9 +1,10 @@
-package com.sermage.mymoviecollection;
+package com.sermage.mymoviecollection.screens.movieDetails;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,52 +17,44 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sermage.mymoviecollection.R;
 import com.sermage.mymoviecollection.adapters.ReviewAdapter;
 import com.sermage.mymoviecollection.adapters.TrailerAdapter;
 import com.sermage.mymoviecollection.data.FavouriteMovie;
-import com.sermage.mymoviecollection.data.MainViewModel;
-import com.sermage.mymoviecollection.data.Movie;
-import com.sermage.mymoviecollection.data.Review;
-import com.sermage.mymoviecollection.data.Trailer;
-import com.sermage.mymoviecollection.utils.JSONUtils;
-import com.sermage.mymoviecollection.utils.NetworkUtils;
+import com.sermage.mymoviecollection.pojo.Movie;
+import com.sermage.mymoviecollection.pojo.Reviews;
+import com.sermage.mymoviecollection.pojo.Trailers;
+import com.sermage.mymoviecollection.screens.favorites.FavoritesActivity;
+import com.sermage.mymoviecollection.screens.favorites.FavoritesViewModel;
+import com.sermage.mymoviecollection.screens.search.SearchableActivity;
+import com.sermage.mymoviecollection.screens.main.MainActivity;
+import com.sermage.mymoviecollection.screens.main.MainViewModel;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    private ImageView imageViewBigPoster;
-    private TextView textViewTitle;
-    private TextView textViewOriginalTitle;
-    private TextView textViewRating;
-    private TextView textViewReleaseDate;
-    private TextView textViewOverview;
     private int id;
-    private MainViewModel viewModel;
+    private FavoritesViewModel favoritesViewModel;
     private Movie movie;
     private FavouriteMovie favouriteMovie;
     private ImageView imageViewFavourite;
 
+    private static final String IMAGE_PATH="https://image.tmdb.org/t/p/";
+    private static final String BIG_POSTER_SIZE="w500";
+
     private ReviewAdapter reviewAdapter;
     private TrailerAdapter trailerAdapter;
-    private RecyclerView recyclerViewReviews;
-    private RecyclerView recyclerViewTrailers;
-
-    private TextView textViewContent;
-    private Button buttonSeeMore;
 
 
     @Override
@@ -76,18 +69,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int id=item.getItemId();
         switch(id){
             case R.id.item_main:
-                Intent intent=new Intent(this,MainActivity.class);
+                Intent intent=new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.item_favourite:
-                Intent intentToFavourites=new Intent(this,FavouritesActivity.class);
+                Intent intentToFavourites=new Intent(this, FavoritesActivity.class);
                 startActivity(intentToFavourites);
                 break;
             case R.id.home:
                 this.finish();
                 return true;
             case R.id.item_search:
-                Intent intentToSearchable=new Intent(this,SearchableActivity.class);
+                Intent intentToSearchable=new Intent(this, SearchableActivity.class);
                 startActivity(intentToSearchable);
                 break;
         }
@@ -115,61 +108,72 @@ public class MovieDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        String lang = Locale.getDefault().getLanguage();
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 onBackPressed();
             }
         });
-        imageViewBigPoster=findViewById(R.id.imageViewBigPoster);
-        textViewTitle=findViewById(R.id.textViewTitle);
-        textViewOriginalTitle=findViewById(R.id.textViewOriginalTitle);
-        textViewRating=findViewById(R.id.textViewRating);
-        textViewReleaseDate=findViewById(R.id.textViewReleaseDate);
-        textViewOverview=findViewById(R.id.textViewOverview);
+        ImageView imageViewBigPoster = findViewById(R.id.imageViewBigPoster);
+        TextView textViewTitle = findViewById(R.id.textViewTitle);
+        TextView textViewOriginalTitle = findViewById(R.id.textViewOriginalTitle);
+        TextView textViewRating = findViewById(R.id.textViewRating);
+        TextView textViewReleaseDate = findViewById(R.id.textViewReleaseDate);
+        TextView textViewOverview = findViewById(R.id.textViewOverview);
         imageViewFavourite=findViewById(R.id.imageViewFavourite);
-        recyclerViewReviews=findViewById(R.id.recyclerViewReviews);
-        recyclerViewTrailers=findViewById(R.id.recyclerViewTrailers);
-        textViewContent=findViewById(R.id.textViewContent);
-        buttonSeeMore=findViewById(R.id.buttonSeeMore);
+        RecyclerView recyclerViewReviews = findViewById(R.id.recyclerViewReviews);
+        RecyclerView recyclerViewTrailers = findViewById(R.id.recyclerViewTrailers);
         Intent intent=getIntent();
         if(intent!=null && intent.hasExtra("id")){
             id=intent.getIntExtra("id",-1);
-
         }else {
             finish();
         }
-        viewModel= ViewModelProviders.of(this).get(MainViewModel.class);
-        movie=viewModel.getMovieById(id);
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        favoritesViewModel=ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        movie= viewModel.getMovieById(id);
         if(movie==null){
-            movie=viewModel.getFavouriteMovieById(id);
+            movie=favoritesViewModel.getFavouriteMovieById(id);
         }
         getSupportActionBar().setTitle(movie.getTitle());
-        Picasso.get().load(movie.getBigPosterPath()).placeholder(R.drawable.waiting_for_loading_poster).into(imageViewBigPoster);
+        Picasso.get().load(IMAGE_PATH+BIG_POSTER_SIZE+movie.getPosterPath()).placeholder(R.drawable.waiting_for_loading_poster).into(imageViewBigPoster);
         textViewTitle.setText(movie.getTitle());
         textViewOverview.setText(movie.getOverview());
         textViewReleaseDate.setText(formatReleaseDate(movie.getReleaseDate()));
         textViewOriginalTitle.setText(movie.getOriginalTitle());
         textViewRating.setText(String.format(Locale.getDefault(),"%.1f",movie.getVoteAverage()));
         setFavourite();
-        JSONObject jsonObjectForReviews= NetworkUtils.getJSONForReviews(movie.getId(), lang);
-        ArrayList<Review> reviews= JSONUtils.getReviewsFromJSON(jsonObjectForReviews);
+        //Подгрузка отзывов
         recyclerViewReviews.setLayoutManager(new LinearLayoutManager(this));
         reviewAdapter=new ReviewAdapter();
-        reviewAdapter.setReviews(reviews);
+        ReviewsViewModel reviewsViewModel = ViewModelProviders.of(this).get(ReviewsViewModel.class);
+        reviewsViewModel.getReviews().observe(this, new Observer<List<Reviews>>() {
+            @Override
+            public void onChanged(List<Reviews> reviews) {
+                reviewAdapter.setReviews(reviews);
+            }
+        });
+        reviewsViewModel.loadReviews(id);
         recyclerViewReviews.setAdapter(reviewAdapter);
-        JSONObject jsonObjectForTrailers=NetworkUtils.getJSONForTrailers(movie.getId(), lang);
-        ArrayList<Trailer> trailers=JSONUtils.getTrailersFromJSON(jsonObjectForTrailers);
+        //Подгрузка трейлеров
         trailerAdapter=new TrailerAdapter();
-        trailerAdapter.setTrailers(trailers);
         recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewTrailers.setAdapter(trailerAdapter);
+        TrailersViewModel trailersViewModel = ViewModelProviders.of(this).get(TrailersViewModel.class);
+        trailersViewModel.getTrailers().observe(this, new Observer<List<Trailers>>() {
+            @Override
+            public void onChanged(List<Trailers> trailers) {
+                trailerAdapter.setTrailers(trailers);
+            }
+        });
+        trailersViewModel.loadTrailers(id);
         trailerAdapter.setTrailerClickListener(new TrailerAdapter.OnTrailerClickListener() {
             @Override
             public void onTrailerClick(String url) {
@@ -177,25 +181,22 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     public void onClickAddFavourite(View view) {
         if(favouriteMovie==null){
-            viewModel.insertFavouriteMovie(new FavouriteMovie(movie));
+            favoritesViewModel.insertFavouriteMovie(new FavouriteMovie(movie));
             Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_SHORT).show();
         }
         else{
-            viewModel.deleteFavouriteMovie(favouriteMovie);
+            favoritesViewModel.deleteFavouriteMovie(favouriteMovie);
             Toast.makeText(this, R.string.deleted_from_favourites, Toast.LENGTH_SHORT).show();
         }
         setFavourite();
     }
 
     public void setFavourite(){
-        favouriteMovie=viewModel.getFavouriteMovieById(id);
+        favouriteMovie=favoritesViewModel.getFavouriteMovieById(id);
         if(favouriteMovie==null){
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp);
         }else{

@@ -10,14 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sermage.mymoviecollection.R;
-import com.sermage.mymoviecollection.data.Review;
+import com.sermage.mymoviecollection.pojo.Reviews;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
-    private List<Review> reviews;
+    private List<Reviews> reviews;
 
+    public ReviewAdapter() {
+        reviews=new ArrayList<>();
+    }
 
     @NonNull
     @Override
@@ -63,7 +67,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
             });
         }
     }
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<Reviews> reviews) {
         this.reviews = reviews;
         notifyDataSetChanged();
     }

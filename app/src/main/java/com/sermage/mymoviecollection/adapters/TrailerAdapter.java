@@ -9,14 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sermage.mymoviecollection.R;
-import com.sermage.mymoviecollection.data.Trailer;
+import com.sermage.mymoviecollection.pojo.Trailers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerHolder> {
 
-    private List<Trailer> trailers;
+    private List<Trailers> trailers;
     private OnTrailerClickListener trailerClickListener;
+
+    public TrailerAdapter() {
+        trailers=new ArrayList<>();
+    }
 
     public interface OnTrailerClickListener{
         void onTrailerClick(String url);
@@ -47,6 +52,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerH
     class TrailerHolder extends RecyclerView.ViewHolder{
 
         TextView textViewNameOfTrailer;
+        private static final String YOUTUBE_URL="https://www.youtube.com/watch?v=";
 
         public TrailerHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,13 +60,13 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerH
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    trailerClickListener.onTrailerClick(trailers.get(getAdapterPosition()).getKey());
+                    trailerClickListener.onTrailerClick(YOUTUBE_URL+trailers.get(getAdapterPosition()).getKey());
                 }
             });
         }
     }
 
-    public void setTrailers(List<Trailer> trailers) {
+    public void setTrailers(List<Trailers> trailers) {
         this.trailers = trailers;
         notifyDataSetChanged();
     }

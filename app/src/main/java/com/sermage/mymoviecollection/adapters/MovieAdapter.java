@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sermage.mymoviecollection.R;
-import com.sermage.mymoviecollection.data.Movie;
+import com.sermage.mymoviecollection.pojo.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,9 +21,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     private List<Movie> movies;
     private OnClickMoviePosterListener posterListener;
     private OnReachEndListener reachEndListener;
+    private static final String IMAGE_PATH="https://image.tmdb.org/t/p/";
+    private static final String SMALL_POSTER_SIZE="w185";
 
     public MovieAdapter() {
-        movies=new ArrayList<>();
+        movies = new ArrayList<>();
     }
 
     public interface OnClickMoviePosterListener{
@@ -53,7 +55,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie=movies.get(position);
-        Picasso.get().load(movie.getPosterPath()).into(holder.imageViewMoviePoster);
+        Picasso.get().load(IMAGE_PATH+SMALL_POSTER_SIZE+movie.getPosterPath()).into(holder.imageViewMoviePoster);
         if(movies.size()>=20 && position==movies.size()-4 && reachEndListener!=null){
             reachEndListener.onReachEnd();
         }
@@ -95,7 +97,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.movies = movies;
         notifyDataSetChanged();
     }
-    public void AddMovies(List<Movie> movies){
+    public void addMovies(List<Movie> movies){
         this.movies.addAll(movies);
         notifyDataSetChanged();
     }
