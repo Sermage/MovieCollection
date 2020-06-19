@@ -8,7 +8,7 @@
     <string name="movie_poster">Movie poster</string>
     <string name="movie_rating">TMDb:</string>
     <string name="release_date">Release date:</string>
-    <string name="movie_description">Overview:</string>
+    <string name="movie_description">Overview</string>
     <string name="movie_title">Title:</string>
     <string name="original_movie_title">Original title:</string>
     <string name="add_to_favourites">Add to Favorites</string>

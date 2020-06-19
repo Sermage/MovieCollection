@@ -65,6 +65,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
                 }
             });
+            textViewContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textViewContent.setMaxLines(4);
+                    buttonSeeMore.setText(R.string.read_more);
+                }
+            });
         }
     }
     public void setReviews(List<Reviews> reviews) {

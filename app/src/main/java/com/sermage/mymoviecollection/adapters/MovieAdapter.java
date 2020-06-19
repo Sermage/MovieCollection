@@ -55,7 +55,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
         Movie movie=movies.get(position);
-        Picasso.get().load(IMAGE_PATH+SMALL_POSTER_SIZE+movie.getPosterPath()).into(holder.imageViewMoviePoster);
+        Picasso.get().load(IMAGE_PATH+SMALL_POSTER_SIZE+movie.getPosterPath()).placeholder(R.drawable.no_poster).into(holder.imageViewMoviePoster);
         if(movies.size()>=20 && position==movies.size()-4 && reachEndListener!=null){
             reachEndListener.onReachEnd();
         }

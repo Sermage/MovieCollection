@@ -10,7 +10,7 @@
     <string name="original_movie_title">Оригинальное название:</string>
     <string name="movie_rating">TMDb:</string>
     <string name="release_date">Дата релиза:</string>
-    <string name="movie_description">Описание:</string>
+    <string name="movie_description">Описание</string>
     <string name="movie_poster">Постер фильма</string>
     <string name="add_to_favourites">Добавить в Избранное</string>
     <string name="play_trailer_of_movie">Включить трейлер к фильму</string>

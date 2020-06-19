@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:text="@string/movie_description"
         style="@style/textLabelStyle"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewReleaseDate" />
 
