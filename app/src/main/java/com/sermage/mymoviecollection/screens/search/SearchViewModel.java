@@ -28,7 +28,7 @@ public class SearchViewModel extends AndroidViewModel {
     private String lang;
     private CompositeDisposable compositeDisposable;
     private static MovieDatabase database;
-    private static final String API_KEY="e95df96cf2fe57cc73fe43be0db6c773";
+    private static final String API_KEY="";
 
     public SearchViewModel(@NonNull Application application) {
         super(application);

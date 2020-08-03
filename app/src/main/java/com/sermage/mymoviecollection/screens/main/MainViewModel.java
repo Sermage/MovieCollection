@@ -31,7 +31,7 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<Throwable> errors;
     private MutableLiveData<Boolean> isLoading;
     private CompositeDisposable compositeDisposable;
-    private static final String API_KEY="e95df96cf2fe57cc73fe43be0db6c773";
+    private static final String API_KEY="";
     private static final String MIN_VOTE_COUNT_VALUE="1000";
     private static int page;
     private static final String SORT_BY_POPULARITY="popularity.desc";

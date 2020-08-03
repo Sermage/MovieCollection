@@ -10,6 +10,7 @@ import com.sermage.mymoviecollection.api.ApiFactory;
 import com.sermage.mymoviecollection.api.ApiService;
 import com.sermage.mymoviecollection.pojo.ReviewResponse;
 import com.sermage.mymoviecollection.pojo.Reviews;
+import com.sermage.mymoviecollection.screens.main.MainViewModel;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ReviewsViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Reviews>> reviews;
-    private static final String API_KEY="e95df96cf2fe57cc73fe43be0db6c773";
+    private static final String API_KEY="";
     private CompositeDisposable compositeDisposable;
 
     public ReviewsViewModel(@NonNull Application application) {
@@ -38,7 +39,7 @@ public class ReviewsViewModel extends AndroidViewModel {
         ApiFactory apiFactory=ApiFactory.getInstance();
         ApiService apiService=apiFactory.getApiService();
         compositeDisposable=new CompositeDisposable();
-        Disposable disposable=apiService.getReviews(id,API_KEY)
+        Disposable disposable=apiService.getReviews(id, API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ReviewResponse>() {
