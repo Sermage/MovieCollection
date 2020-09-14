@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie Collection</string>
+    <string name="app_name">MovieCollection</string>
     <string name="small_poster_description">Movie poster</string>
     <string name="sort_by_popularity">By popularity</string>
     <string name="sort_by_rating">By rating</string>
@@ -22,6 +22,12 @@
     <string name="Favorites_activity_label">Watchlist</string>
     <string name="hint_search">Search...</string>
     <string name="search_item_title">Search</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_favorites">Favorites</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

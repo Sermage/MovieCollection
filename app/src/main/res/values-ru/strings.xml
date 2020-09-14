@@ -23,4 +23,7 @@
     <string name="search_item_title">Поиск</string>
     <string name="read_more">Read more...</string>
     <string name="read_less">Read less</string>
+    <string name="title_home">Главная</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_favorites">Избранное</string>
 </resources>
