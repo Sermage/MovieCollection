@@ -1,5 +1,7 @@
-package com.sermage.mymoviecollection
+package com.sermage.mymoviecollection.screens.ui.moviedetails
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.sermage.mymoviecollection.R
+import com.sermage.mymoviecollection.adapters.ReviewAdapter
+import com.sermage.mymoviecollection.adapters.TrailerAdapter
 import com.sermage.mymoviecollection.pojo.Movie
+import com.sermage.mymoviecollection.screens.MainActivity
 import com.sermage.mymoviecollection.screens.ui.favorites.FavoritesViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -34,13 +39,17 @@ class MovieDetailsFragment : Fragment() {
     private val IMAGE_PATH = "https://image.tmdb.org/t/p/"
     private val BIG_POSTER_SIZE = "w500"
     private var movie:Movie?=null
+    private lateinit var reviewAdapter: ReviewAdapter
+    private lateinit var trailerAdapter: TrailerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movie=it.get(ARG_MOVIE) as Movie
         }
-        activity?.title=movie?.title
+        requireActivity().actionBar?.title=movie?.title
+        reviewAdapter= ReviewAdapter()
+        trailerAdapter= TrailerAdapter()
     }
 
     override fun onCreateView(
@@ -55,6 +64,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val favoritesViewModel:FavoritesViewModel by viewModels()
+        val movieDetailsViewModel:MovieDetailsViewModel by viewModels()
 
         val imageViewBigPoster: ImageView = view.findViewById(R.id.imageViewBigPoster)
         val textViewTitle: TextView =view.findViewById(R.id.textViewTitle)
@@ -92,6 +102,25 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             setFavourite()
+        }
+        //Присоединяем отзывы
+        recyclerViewReviews.adapter=reviewAdapter
+        movie?.id?.let { movieDetailsViewModel.loadReviews(it) }
+        movieDetailsViewModel.getReviews().observe(viewLifecycleOwner,{
+            reviewAdapter.reviews=it
+        })
+        //Присоединяем трейлеры
+        recyclerViewTrailers.adapter=trailerAdapter
+        movie?.id?.let { movieDetailsViewModel.loadTrailers(it) }
+        movieDetailsViewModel.getTrailers().observe(viewLifecycleOwner,{
+            trailerAdapter.trailers=it
+        })
+        trailerAdapter.onTrailerClickListener=object :TrailerAdapter.OnTrailerClickListener{
+            override fun onTrailerClick(url: String?) {
+                val intent= Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+
         }
     }
 

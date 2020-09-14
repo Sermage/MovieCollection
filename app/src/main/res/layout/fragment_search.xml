@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_darkGrey"
-    tools:context=".screens.ui.search.DashboardFragment">
+    tools:context=".screens.ui.search.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchViewMovies"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMoviePosterSearchable"
+        android:id="@+id/recyclerViewSearchable"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

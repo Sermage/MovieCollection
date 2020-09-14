@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sermage.mymoviecollection.MovieDetailsFragment
+import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
 import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
 
@@ -37,7 +37,8 @@ class FavoritesFragment : Fragment() {
         favoritesAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
             override fun onClickMoviePoster(position: Int) {
                 val movie=favoritesAdapter.movies[position]
-                view.findNavController().navigate(R.id.action_navigation_favorites_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
+                view.findNavController().navigate(R.id.action_navigation_favorites_to_movieDetailsFragment,
+                    MovieDetailsFragment.newInstance(movie).arguments)
             }
 
         }

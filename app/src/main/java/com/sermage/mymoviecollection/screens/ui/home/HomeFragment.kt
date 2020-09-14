@@ -78,14 +78,14 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun getColumnCount(): Int {
+        private fun getColumnCount(): Int {
         val displayMetrics = DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         val width = (displayMetrics.widthPixels / displayMetrics.density).toInt()
         return if (width / 185 > 2) width / 185 else 2
     }
 
-    fun setLoading(loading: Boolean) {
+    private fun setLoading(loading: Boolean) {
         isLoading = loading
         if (isLoading) {
             progressBarLoading.visibility = View.VISIBLE
