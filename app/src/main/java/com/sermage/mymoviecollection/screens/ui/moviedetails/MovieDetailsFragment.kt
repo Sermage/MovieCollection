@@ -1,6 +1,8 @@
 package com.sermage.mymoviecollection.screens.ui.moviedetails
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -110,6 +112,7 @@ class MovieDetailsFragment : Fragment() {
             reviewAdapter.reviews=it
         })
         //Присоединяем трейлеры
+
         recyclerViewTrailers.adapter=trailerAdapter
         movie?.id?.let { movieDetailsViewModel.loadTrailers(it) }
         movieDetailsViewModel.getTrailers().observe(viewLifecycleOwner,{

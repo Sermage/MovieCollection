@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
+import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -56,8 +57,7 @@ class HomeFragment : Fragment() {
         movieAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
             override fun onClickMoviePoster(position: Int) {
                 val movie=movieAdapter.movies[position]
-                val bundle= bundleOf("movie" to movie)
-                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,bundle)
+                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
             }
 
         }
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         homeViewModel.loadData()
         homeViewModel.getMovies().observe(viewLifecycleOwner, {
-            movieAdapter.movies = it
+            movieAdapter.movies = it.toMutableList()
         })
         homeViewModel.getErrors().observe(viewLifecycleOwner, {
             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()

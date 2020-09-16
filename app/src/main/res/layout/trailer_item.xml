@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:layout_margin="8dp"
+        android:background="@color/background_darkGrey"
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageViewPlay"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_weight="4"
+        android:background="@drawable/round_outline"
+        android:contentDescription="@string/play_trailer_of_movie"
+        android:outlineProvider="background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewNameOfTrailer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_darkGrey">
-
-        <ImageView
-            android:id="@+id/imageViewPlay"
-            android:layout_width="@dimen/button_play_size"
-            android:layout_height="@dimen/button_play_size"
-            android:contentDescription="@string/play_trailer_of_movie"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_play_circle_24dp" />
-        <TextView
-            android:id="@+id/textViewNameOfTrailer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/colorButtonNormal"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/imageViewPlay"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:textColor="?attr/colorButtonNormal"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPlay"
+        tools:text="Official Trailer" />
 
 
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>

@@ -48,7 +48,7 @@ class FavoritesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val favoritesViewModel:FavoritesViewModel by viewModels()
         favoritesViewModel.favoritesList.observe(viewLifecycleOwner, Observer {
-            favoritesAdapter.movies=it
+            favoritesAdapter.movies=it.toMutableList()
         })
     }
 }

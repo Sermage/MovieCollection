@@ -1,7 +1,9 @@
 package com.sermage.mymoviecollection.screens
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,6 +28,15 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if(destination.id==R.id.movieDetailsFragment){
+                navView.visibility= View.GONE
+            }else{
+                navView.visibility=View.VISIBLE
+            }
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

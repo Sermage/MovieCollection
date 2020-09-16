@@ -15,7 +15,7 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
 
     }
 
-    var movies: List<Movie> = listOf()
+    var movies= mutableListOf<Movie>()
     set(value) {
         field=value
         notifyDataSetChanged()
@@ -55,4 +55,9 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
     interface OnReachEndListener {
         fun onReachEnd()
     }
+    fun clear(){
+        movies.clear()
+        notifyDataSetChanged()
+    }
+
 }
