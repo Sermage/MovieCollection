@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.movie_item.view.*
 class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
     inner class MovieHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val imageViewMoviePoster=itemView.imageViewMoviePoster
+        val textViewRating=itemView.textViewRating
 
     }
 
@@ -35,7 +36,8 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val movie = movies[position]
         Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
-            .placeholder(R.drawable.no_poster_dark).into(holder.imageViewMoviePoster)
+            .into(holder.imageViewMoviePoster)
+        holder.textViewRating.text=movie.voteAverage.toString()
         if (movies.size >= 20 && position == movies.size - 4 && reachEndListener != null) {
             reachEndListener?.onReachEnd()
         }

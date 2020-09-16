@@ -26,4 +26,7 @@
     <string name="title_home">Главная</string>
     <string name="title_search">Поиск</string>
     <string name="title_favorites">Избранное</string>
+    <string name="Tranding">В тренде</string>
+    <string name="movies">ФИЛЬМЫ</string>
+    <string name="tv_shohs">СЕРИАЛЫ</string>
 </resources>

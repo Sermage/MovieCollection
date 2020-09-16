@@ -127,7 +127,7 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    fun setFavourite() {
+    private fun setFavourite() {
          val isFavorite=movie?.isFavorite
         if (isFavorite==false) {
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp)
@@ -156,20 +156,23 @@ class MovieDetailsFragment : Fragment() {
 
     }
 
-    private fun formatReleaseDate(releaseDate: String?): String? {
-        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
-        val date: Date?
-        var result: String? = null
-        try {
-            date = inputDateFormat.parse(releaseDate)
-            if (date != null) {
-                result = outputDateFormat.format(date)
+    private fun formatReleaseDate(releaseDate: String?):String? {
+        releaseDate?.let {
+            val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputDateFormat = SimpleDateFormat("LLLL yyyy", Locale.getDefault())
+            val date: Date?
+            var result: String? = null
+            try {
+                date = inputDateFormat.parse(it)
+                if (date != null) {
+                    result = outputDateFormat.format(date)
+                }
+            } catch (e: ParseException) {
+                e.printStackTrace()
             }
-        } catch (e: ParseException) {
-            e.printStackTrace()
+           return result
         }
-        return result
+        return null
     }
 
 

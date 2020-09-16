@@ -36,6 +36,20 @@ interface ApiService {
             @Query(PARAM_LANG) lang: String= LANG,
             @Query(PARAM_QUERY) query: String): Single<MovieResponse>
 
+    @GET("genre/movie/list")
+    fun getGenres(
+            @Query(PARAM_KEY) apiKey: String= API_KEY,
+            @Query(PARAM_LANG) lang: String= LANG
+    ):Single<MovieResponse>
+
+    @GET("trending/{media_type}/{time_window}")
+    fun getTrendingMedia(
+        @Path(PARAM_MEDIA_TYPE) mediaType:String= MEDIA_TYPE,
+        @Path(PARAM_TIME_WINDOW) timeWindow:String= TIME_WINDOW,
+        @Query(PARAM_KEY) apiKey: String= API_KEY,
+        @Query(PAGE) page: Int=1
+    ):Single<MovieResponse>
+
     companion object{
         private const val PARAM_KEY="api_key"
         private const val PARAM_ID="id"
@@ -46,5 +60,9 @@ interface ApiService {
         private const val PARAM_QUERY="query"
         private const val API_KEY="bcd0186eaa110f9203b13f70c974df31"
         private var LANG=Locale.getDefault().language
+        private const val PARAM_MEDIA_TYPE="media_type"
+        private const val PARAM_TIME_WINDOW="time_window"
+        private const val MEDIA_TYPE="movie"
+        private const val TIME_WINDOW="week"
     }
 }

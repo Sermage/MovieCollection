@@ -1,6 +1,7 @@
 package com.sermage.mymoviecollection.screens.ui.favorites
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerViewFavorites=view.findViewById<RecyclerView>(R.id.recyclerViewFavorites)
-        recyclerViewFavorites.layoutManager=GridLayoutManager(context,2)
+        recyclerViewFavorites.layoutManager=GridLayoutManager(context,getColumnCount())
         favoritesAdapter= MovieAdapter()
         recyclerViewFavorites.adapter=favoritesAdapter
         favoritesAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
@@ -50,5 +51,12 @@ class FavoritesFragment : Fragment() {
         favoritesViewModel.favoritesList.observe(viewLifecycleOwner, Observer {
             favoritesAdapter.movies=it.toMutableList()
         })
+    }
+
+    private fun getColumnCount(): Int {
+        val displayMetrics = DisplayMetrics()
+        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        val width = (displayMetrics.widthPixels / displayMetrics.density).toInt()
+        return if (width / 92 > 2) width / 92 else 2
     }
 }
