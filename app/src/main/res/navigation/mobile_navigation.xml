@@ -15,6 +15,9 @@
             app:destination="@id/movieDetailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
            />
+        <action
+            android:id="@+id/action_navigation_home_to_TVShowDetailsFragment"
+            app:destination="@id/TVShowDetailsFragment" />
     </fragment>
 
     <fragment
@@ -26,6 +29,9 @@
             android:id="@+id/action_navigation_search_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment"
         />
+        <action
+            android:id="@+id/action_navigation_search_to_TVShowDetailsFragment"
+            app:destination="@id/TVShowDetailsFragment" />
     </fragment>
 
     <fragment
@@ -37,6 +43,9 @@
             android:id="@+id/action_navigation_favorites_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment"
           />
+        <action
+            android:id="@+id/action_navigation_favorites_to_TVShowDetailsFragment"
+            app:destination="@id/TVShowDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -47,4 +56,9 @@
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/TVShowDetailsFragment"
+        android:name="com.sermage.mymoviecollection.TVShowDetailsFragment"
+        android:label="fragment_t_v_show_details"
+        tools:layout="@layout/fragment_tv_show_details" />
 </navigation>
