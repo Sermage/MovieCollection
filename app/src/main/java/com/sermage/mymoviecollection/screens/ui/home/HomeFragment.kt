@@ -12,13 +12,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
+import com.sermage.mymoviecollection.adapters.TVShowAdapter
 import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
     private lateinit var movieAdapter:MovieAdapter
-    private lateinit var tvAdapter:MovieAdapter
+    private lateinit var tvAdapter:TVShowAdapter
     private lateinit var homeViewModel: HomeViewModel
     private var isLoading:Boolean=false
 
@@ -26,7 +27,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movieAdapter= MovieAdapter()
-        tvAdapter=MovieAdapter()
+        tvAdapter=TVShowAdapter()
     }
 
     override fun onCreateView(
@@ -71,17 +72,17 @@ class HomeFragment : Fragment() {
 
         }
         recyclerViewTrendingTVshows.adapter=tvAdapter
-        tvAdapter.reachEndListener=object :MovieAdapter.OnReachEndListener{
+        tvAdapter.reachEndListener=object :TVShowAdapter.OnReachEndListener{
             override fun onReachEnd() {
                 if(!isLoading){
                     homeViewModel.loadTrendingTVShows()
                 }
             }
         }
-        tvAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
-            override fun onClickMoviePoster(position: Int) {
-                val movie=tvAdapter.movies[position]
-                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
+        tvAdapter.posterListener=object :TVShowAdapter.OnClickTVShowPosterListener{
+            override fun onClickTVShowPoster(position: Int) {
+                val tvShowAdapter=tvAdapter.tvShows[position]
+//                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(tv).arguments)
             }
 
         }
@@ -97,7 +98,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.loadTrendingTVShows()
         homeViewModel.getTrendingTVShows().observe(viewLifecycleOwner,{
-            tvAdapter.movies=it.toMutableList()
+            tvAdapter.tvShows=it.toMutableList()
         })
         homeViewModel.getErrors().observe(viewLifecycleOwner, {
             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()

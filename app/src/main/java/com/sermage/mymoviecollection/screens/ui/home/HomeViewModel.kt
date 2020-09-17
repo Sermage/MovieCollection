@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sermage.mymoviecollection.api.ApiFactory
 import com.sermage.mymoviecollection.pojo.Movie
+import com.sermage.mymoviecollection.pojo.TVShow
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -15,9 +16,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val listOfTrendingMovies= mutableListOf<Movie>()
-    private val listOfTrendingTVShows= mutableListOf<Movie>()
+    private val listOfTrendingTVShows= mutableListOf<TVShow>()
     private val trendingMovies=MutableLiveData<List<Movie>>()
-    private val trendingTVShows=MutableLiveData<List<Movie>>()
+    private val trendingTVShows=MutableLiveData<List<TVShow>>()
     private val errors = MutableLiveData<Throwable>()
     private val isLoading = MutableLiveData<Boolean>()
     private var compositeDisposable = CompositeDisposable()
@@ -31,7 +32,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         return trendingMovies
     }
 
-    fun getTrendingTVShows():LiveData<List<Movie>>{
+    fun getTrendingTVShows():LiveData<List<TVShow>>{
         return trendingTVShows
     }
 
@@ -48,7 +49,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
         isLoading.postValue(true)
-        val disposable: Disposable = ApiFactory.apiService.getTrendingMedia(page=page)
+        val disposable: Disposable = ApiFactory.apiService.getTrendingMovies(page=page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -70,7 +71,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
         isLoading.postValue(true)
-        val disposable: Disposable = ApiFactory.apiService.getTrendingMedia(mediaType = "tv",page=page)
+        val disposable: Disposable = ApiFactory.apiService.getTrendingTVShows(page=page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

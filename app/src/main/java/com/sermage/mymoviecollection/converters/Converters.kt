@@ -9,13 +9,24 @@ class Converters {
     private val gson = Gson()
 
     @TypeConverter
-    fun listToString(list:List<Int>): String {
+    fun intListToString(list:List<Int>): String {
         return gson.toJson(list)
     }
 
 
     @TypeConverter
-    fun stringToList(listAsString: String): List<Int> {
+    fun stringToIntList(listAsString: String): List<Int> {
         return gson.fromJson(listAsString, object : TypeToken<List<Int>>() {}.type)
+    }
+
+    @TypeConverter
+    fun stringListToString(list:List<String>): String {
+        return gson.toJson(list)
+    }
+
+
+    @TypeConverter
+    fun stringToStringList(listAsString: String): List<String> {
+        return gson.fromJson(listAsString, object : TypeToken<List<String>>() {}.type)
     }
 }

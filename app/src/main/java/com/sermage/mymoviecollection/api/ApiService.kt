@@ -2,6 +2,7 @@ package com.sermage.mymoviecollection.api
 
 import com.sermage.mymoviecollection.pojo.MovieResponse
 import com.sermage.mymoviecollection.pojo.ReviewResponse
+import com.sermage.mymoviecollection.pojo.TVShowResponse
 import com.sermage.mymoviecollection.pojo.TrailerResponse
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -42,13 +43,21 @@ interface ApiService {
             @Query(PARAM_LANG) lang: String= LANG
     ):Single<MovieResponse>
 
-    @GET("trending/{media_type}/{time_window}")
-    fun getTrendingMedia(
-        @Path(PARAM_MEDIA_TYPE) mediaType:String= MEDIA_TYPE,
+    @GET("trending/movie/{time_window}")
+    fun getTrendingMovies(
         @Path(PARAM_TIME_WINDOW) timeWindow:String= TIME_WINDOW,
         @Query(PARAM_KEY) apiKey: String= API_KEY,
         @Query(PAGE) page: Int=1
     ):Single<MovieResponse>
+
+    @GET("trending/tv/{time_window}")
+    fun getTrendingTVShows(
+        @Path(PARAM_TIME_WINDOW) timeWindow:String= TIME_WINDOW,
+        @Query(PARAM_KEY) apiKey: String= API_KEY,
+        @Query(PAGE) page: Int=1
+    ):Single<TVShowResponse>
+
+
 
     companion object{
         private const val PARAM_KEY="api_key"
