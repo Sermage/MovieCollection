@@ -94,7 +94,7 @@ interface ApiService {
         private const val PAGE="page"
         private const val PARAM_QUERY="query"
         private val SORT_BY_VOTE_AVERAGE = "vote_average.desc"
-        private const val API_KEY="bcd0186eaa110f9203b13f70c974df31"
+        private const val API_KEY=""
         private var LANG=Locale.getDefault().language
         private const val PARAM_MEDIA_TYPE="media_type"
         private const val PARAM_TIME_WINDOW="time_window"
