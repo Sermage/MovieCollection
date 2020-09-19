@@ -28,5 +28,10 @@
     <string name="title_favorites">Избранное</string>
     <string name="Tranding">В тренде</string>
     <string name="movies">ФИЛЬМЫ</string>
-    <string name="tv_shohs">СЕРИАЛЫ</string>
+    <string name="tv_shows">СЕРИАЛЫ</string>
+    <string name="top_rated">С высоким рейтингом</string>
+    <string name="first_air_date">Дата первого эфира</string>
+    <string name="for_kids">Для детей</string>
+    <string name="no_reviews">Нет отзывов:(</string>
+    <string name="no_video">Нет видео:(</string>
 </resources>

@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment() {
     private lateinit var movieAdapter:MovieAdapter
+    val searchableViewModel:SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val searchableViewModel:SearchViewModel by viewModels()
         val recyclerViewSearch=view.findViewById<RecyclerView>(R.id.recyclerViewSearchable)
         val searchView=view.findViewById<SearchView>(R.id.searchViewMovies)
         recyclerViewSearch.adapter=movieAdapter

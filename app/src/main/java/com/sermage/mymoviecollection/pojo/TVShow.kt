@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 import com.sermage.mymoviecollection.converters.Converters
+import java.io.Serializable
 
 
 @Entity(tableName = "favorite_tv_shows")
@@ -66,4 +67,4 @@ data class TVShow (
     val popularity:Double = 0.0,
 
     var isFavorite:Boolean?=false
-)
+):Serializable

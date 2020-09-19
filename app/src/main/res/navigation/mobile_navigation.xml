@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/TVShowDetailsFragment"
-        android:name="com.sermage.mymoviecollection.TVShowDetailsFragment"
+        android:name="com.sermage.mymoviecollection.screens.ui.tvshowdetails.TVShowDetailsFragment"
         android:label="fragment_t_v_show_details"
         tools:layout="@layout/fragment_tv_show_details" />
 </navigation>

@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sermage.mymoviecollection.api.ApiFactory
 import com.sermage.mymoviecollection.api.ApiService
+import com.sermage.mymoviecollection.pojo.MovieDetails
 import com.sermage.mymoviecollection.pojo.Reviews
 import com.sermage.mymoviecollection.pojo.Trailers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class MovieDetailsViewModel(application: Application):AndroidViewModel(application) {
@@ -17,12 +19,27 @@ class MovieDetailsViewModel(application: Application):AndroidViewModel(applicati
     private val compositeDisposable=CompositeDisposable()
     private val reviews=MutableLiveData<List<Reviews>>()
     private val trailers=MutableLiveData<List<Trailers>>()
+    private val movieDetails=MutableLiveData<MovieDetails>()
 
     fun getReviews():LiveData<List<Reviews>>{
         return reviews
     }
     fun getTrailers():LiveData<List<Trailers>>{
         return trailers
+    }
+    fun getMovieDetails():LiveData<MovieDetails>{
+        return movieDetails
+    }
+    fun getMovieDetails(id:Int){
+        val disposable: Disposable = ApiFactory.apiService.getMovieDetails(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                movieDetails.value=it
+            }, {
+
+            })
+        compositeDisposable.add(disposable)
     }
 
     fun loadReviews(id:Int){

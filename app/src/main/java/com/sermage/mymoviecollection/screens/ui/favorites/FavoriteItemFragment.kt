@@ -1,20 +1,18 @@
 package com.sermage.mymoviecollection.screens.ui.favorites
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
 import com.sermage.mymoviecollection.adapters.TVShowAdapter
-import com.sermage.mymoviecollection.screens.ui.favorites.dummy.DummyContent
-import kotlinx.android.synthetic.main.fragment_movie_details.*
+import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
+import com.sermage.mymoviecollection.screens.ui.tvshowdetails.TVShowDetailsFragment
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +22,7 @@ class FavoriteItemFragment : Fragment() {
 
     private var initNumber=0
     private lateinit var recyclerViewFavorites:RecyclerView
-    private lateinit var favoriteViewModel:FavoritesViewModel
+    private val favoriteViewModel:FavoritesViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +37,7 @@ class FavoriteItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_list, container, false)
-        favoriteViewModel= ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
-
-        return view
+        return inflater.inflate(R.layout.fragment_item_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,18 +49,30 @@ class FavoriteItemFragment : Fragment() {
             favoriteViewModel.favoritesMovieList.observe(viewLifecycleOwner,{
                 favoritesAdapter.movies=it.toMutableList()
             })
+            favoritesAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
+                override fun onClickMoviePoster(position: Int) {
+                    val movie=favoritesAdapter.movies[position]
+                view.findNavController().navigate(R.id.action_navigation_favorites_to_movieDetailsFragment,
+                    MovieDetailsFragment.newInstance(movie).arguments)
+                }
+
+            }
         }else if(initNumber==2){
            val favoritesAdapter=TVShowAdapter()
             recyclerViewFavorites.adapter=favoritesAdapter
             favoriteViewModel.favoritesTVShowList.observe(viewLifecycleOwner,{
                 favoritesAdapter.tvShows=it.toMutableList()
             })
+            favoritesAdapter.posterListener=object :TVShowAdapter.OnClickTVShowPosterListener{
+                override fun onClickTVShowPoster(position: Int) {
+                    val tvShow=favoritesAdapter.tvShows[position]
+                    view.findNavController().navigate(R.id.action_navigation_favorites_to_TVShowDetailsFragment,TVShowDetailsFragment.newInstance(tvShow).arguments)
+                }
+
+            }
         }
 
     }
-
-
-
     companion object {
 
         private const val ARG_INIT="number"

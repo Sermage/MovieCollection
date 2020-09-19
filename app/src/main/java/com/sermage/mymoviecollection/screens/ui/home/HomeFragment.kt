@@ -7,27 +7,35 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
 import com.sermage.mymoviecollection.adapters.TVShowAdapter
 import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
+import com.sermage.mymoviecollection.screens.ui.tvshowdetails.TVShowDetailsFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
-    private lateinit var movieAdapter:MovieAdapter
-    private lateinit var tvAdapter:TVShowAdapter
-    private lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var movieAdapter1:MovieAdapter
+    private lateinit var tvAdapter1:TVShowAdapter
+    private lateinit var movieAdapter2:MovieAdapter
+    private lateinit var tvAdapter2:TVShowAdapter
+    private lateinit var movieAdapter3:MovieAdapter
     private var isLoading:Boolean=false
+    private val homeViewModel:HomeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter= MovieAdapter()
-        tvAdapter=TVShowAdapter()
+        movieAdapter1= MovieAdapter()
+        tvAdapter1=TVShowAdapter()
+        movieAdapter2= MovieAdapter()
+        tvAdapter2= TVShowAdapter()
+        movieAdapter3= MovieAdapter()
     }
 
     override fun onCreateView(
@@ -35,8 +43,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -45,60 +51,126 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerViewTrendingMovies=view.findViewById<RecyclerView>(R.id.recyclerViewTrendingMovies)
         val recyclerViewTrendingTVshows=view.findViewById<RecyclerView>(R.id.recyclerViewTrendingTVshows)
+        val recyclerViewRatedMovies=view.findViewById<RecyclerView>(R.id.recyclerViewRatedMovies)
+        val recyclerViewRatedTVShows=view.findViewById<RecyclerView>(R.id.recyclerViewRatedTvShows)
+        val recyclerViewKidMovies=view.findViewById<RecyclerView>(R.id.recyclerViewKidMovies)
+
         val headLineTrendingMovies=view.findViewById<View>(R.id.headLineTrendingMovies)
         val headLineTrendingTVshows=view.findViewById<View>(R.id.headLineTrendingTVshows)
+        val headLineRatedMovies=view.findViewById<View>(R.id.headLineRatedMovies)
+        val headLineRatedTVShows=view.findViewById<View>(R.id.headLineRatedTVShows)
+        val headLineKidMovies=view.findViewById<View>(R.id.headLineKidMovies)
+
         val textViewLabel1=headLineTrendingMovies.findViewById<TextView>(R.id.textViewLabel1)
         val textViewLabel2=headLineTrendingMovies.findViewById<TextView>(R.id.textViewLabel2)
         val textViewLabelTV1=headLineTrendingTVshows.findViewById<TextView>(R.id.textViewLabel1)
         val textViewLabelTV2=headLineTrendingTVshows.findViewById<TextView>(R.id.textViewLabel2)
+        val textViewLabel1RatedMovies=headLineRatedMovies.findViewById<TextView>(R.id.textViewLabel1)
+        val textViewLabe2RatedMovies=headLineRatedMovies.findViewById<TextView>(R.id.textViewLabel2)
+        val textViewLabel1RatedTVShows=headLineRatedTVShows.findViewById<TextView>(R.id.textViewLabel1)
+        val textViewLabe2RatedTvShows=headLineRatedTVShows.findViewById<TextView>(R.id.textViewLabel2)
+        val textViewLabel1KidMovies=headLineKidMovies.findViewById<TextView>(R.id.textViewLabel1)
+        val textViewLabe2KidMovies=headLineKidMovies.findViewById<TextView>(R.id.textViewLabel2)
+
         textViewLabel1.text=getString(R.string.Tranding)
         textViewLabel2.text=getString(R.string.movies)
         textViewLabelTV1.text=getString(R.string.Tranding)
-        textViewLabelTV2.text=getString(R.string.tv_shohs)
+        textViewLabelTV2.text=getString(R.string.tv_shows)
+        textViewLabel1RatedMovies.text=getString(R.string.top_rated)
+        textViewLabe2RatedMovies.text=getString(R.string.movies)
+        textViewLabel1RatedTVShows.text=getString(R.string.top_rated)
+        textViewLabe2RatedTvShows.text=getString(R.string.tv_shows)
+        textViewLabel1KidMovies.text=getString(R.string.for_kids)
+        textViewLabe2KidMovies.text=getString(R.string.movies)
 
-        recyclerViewTrendingMovies.adapter=movieAdapter
-        movieAdapter.reachEndListener=object :MovieAdapter.OnReachEndListener{
+        recyclerViewTrendingMovies.adapter=movieAdapter1
+        movieAdapter1.reachEndListener=object :MovieAdapter.OnReachEndListener{
             override fun onReachEnd() {
                 if(!isLoading){
                     homeViewModel.loadTrendingMovies()
                 }
             }
         }
-        movieAdapter.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
+        movieAdapter1.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
             override fun onClickMoviePoster(position: Int) {
-                val movie=movieAdapter.movies[position]
+                val movie=movieAdapter1.movies[position]
                 view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
             }
 
         }
-        recyclerViewTrendingTVshows.adapter=tvAdapter
-        tvAdapter.reachEndListener=object :TVShowAdapter.OnReachEndListener{
+        recyclerViewTrendingTVshows.adapter=tvAdapter1
+        tvAdapter1.reachEndListener=object :TVShowAdapter.OnReachEndListener{
             override fun onReachEnd() {
                 if(!isLoading){
                     homeViewModel.loadTrendingTVShows()
                 }
             }
         }
-        tvAdapter.posterListener=object :TVShowAdapter.OnClickTVShowPosterListener{
+        tvAdapter1.posterListener=object :TVShowAdapter.OnClickTVShowPosterListener{
             override fun onClickTVShowPoster(position: Int) {
-                val tvShowAdapter=tvAdapter.tvShows[position]
-//                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(tv).arguments)
+                val tvShow=tvAdapter1.tvShows[position]
+               view.findNavController().navigate(R.id.action_navigation_home_to_TVShowDetailsFragment,TVShowDetailsFragment.newInstance(tvShow).arguments)
             }
 
         }
+
+        recyclerViewRatedMovies.adapter=movieAdapter2
+        movieAdapter2.reachEndListener=object :MovieAdapter.OnReachEndListener{
+            override fun onReachEnd() {
+                if(!isLoading){
+                    homeViewModel.loadRatedMovies()
+                }
+            }
+        }
+        movieAdapter2.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
+            override fun onClickMoviePoster(position: Int) {
+                val movie=movieAdapter2.movies[position]
+                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
+            }
+        }
+
+        recyclerViewRatedTVShows.adapter=tvAdapter2
+        tvAdapter2.reachEndListener=object :TVShowAdapter.OnReachEndListener{
+            override fun onReachEnd() {
+                if(!isLoading){
+                    homeViewModel.loadRatedTVShows()
+                }
+            }
+        }
+        tvAdapter2.posterListener=object :TVShowAdapter.OnClickTVShowPosterListener{
+            override fun onClickTVShowPoster(position: Int) {
+                val tvShow=tvAdapter2.tvShows[position]
+                view.findNavController().navigate(R.id.action_navigation_home_to_TVShowDetailsFragment,TVShowDetailsFragment.newInstance(tvShow).arguments)
+            }
+
+        }
+        recyclerViewKidMovies.adapter=movieAdapter3
+        movieAdapter3.reachEndListener=object :MovieAdapter.OnReachEndListener{
+            override fun onReachEnd() {
+                if(!isLoading){
+                    homeViewModel.loadKidMovies()
+                }
+            }
+        }
+        movieAdapter3.posterListener=object :MovieAdapter.OnClickMoviePosterListener{
+            override fun onClickMoviePoster(position: Int) {
+                val movie=movieAdapter3.movies[position]
+                view.findNavController().navigate(R.id.action_navigation_home_to_movieDetailsFragment,MovieDetailsFragment.newInstance(movie).arguments)
+            }
+
+        }
+
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        homeViewModel.loadTrendingMovies()
         homeViewModel.getTrendingMovies().observe(viewLifecycleOwner, {
-            movieAdapter.movies = it.toMutableList()
+            movieAdapter1.movies = it.toMutableList()
         })
 
-        homeViewModel.loadTrendingTVShows()
         homeViewModel.getTrendingTVShows().observe(viewLifecycleOwner,{
-            tvAdapter.tvShows=it.toMutableList()
+            tvAdapter1.tvShows=it.toMutableList()
         })
         homeViewModel.getErrors().observe(viewLifecycleOwner, {
             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
@@ -106,16 +178,19 @@ class HomeFragment : Fragment() {
         homeViewModel.getStatusOfLoading().observe(viewLifecycleOwner,{
             setLoading(it)
         })
+        homeViewModel.getRatedMovies().observe(viewLifecycleOwner,{
+            movieAdapter2.movies=it.toMutableList()
+        })
+        homeViewModel.getRatedTVShows().observe(viewLifecycleOwner,{
+            tvAdapter2.tvShows=it.toMutableList()
+        })
+        homeViewModel.getKidMovies().observe(viewLifecycleOwner,{
+            movieAdapter3.movies=it.toMutableList()
+        })
 
 
     }
 
-//        private fun getColumnCount(): Int {
-//        val displayMetrics = DisplayMetrics()
-//        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-//        val width = (displayMetrics.widthPixels / displayMetrics.density).toInt()
-//        return if (width / 185 > 2) width / 185 else 2
-//    }
 
     private fun setLoading(loading: Boolean) {
         isLoading = loading
@@ -125,9 +200,6 @@ class HomeFragment : Fragment() {
             progressBarLoading.visibility = View.INVISIBLE
         }
     }
-
-
-
 
 
 }
