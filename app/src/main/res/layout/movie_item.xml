@@ -8,10 +8,9 @@
     android:layout_margin="4dp">
     <ImageView
         android:id="@+id/imageViewMoviePoster"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="115dp"
+        android:layout_height="185dp"
         android:contentDescription="@string/small_poster_description"
-        android:background="@drawable/round_outline"
         android:outlineProvider="background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,6 +25,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:padding="2dp"
+        android:textColor="@color/white_color"
+        android:background="#50000000"
         app:layout_constraintTop_toTopOf="@id/imageViewMoviePoster"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="7.5"

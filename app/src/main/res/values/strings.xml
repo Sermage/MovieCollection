@@ -33,6 +33,10 @@
     <string name="for_kids">For kids</string>
     <string name="no_reviews">there\'re no reviews yet:(</string>
     <string name="no_video">there\'re no trailers :(</string>
+    <string name="genres">Genres</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_of_searchmain">ПОИСК</string>
+    <string name="hint_search_title">Фильмы, сериалы</string>
 
 
 </resources>

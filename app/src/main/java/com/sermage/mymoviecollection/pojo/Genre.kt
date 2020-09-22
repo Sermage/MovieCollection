@@ -4,9 +4,6 @@ import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 
-
-
-
 data class Genre (
     @SerializedName("id")
     @Expose
@@ -14,5 +11,5 @@ data class Genre (
 
     @SerializedName("name")
     @Expose
-    val name: String? = null
+    val name: String
 )

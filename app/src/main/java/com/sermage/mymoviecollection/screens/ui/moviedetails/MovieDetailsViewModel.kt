@@ -30,7 +30,7 @@ class MovieDetailsViewModel(application: Application):AndroidViewModel(applicati
     fun getMovieDetails():LiveData<MovieDetails>{
         return movieDetails
     }
-    fun getMovieDetails(id:Int){
+    fun loadMovieDetails(id:Int){
         val disposable: Disposable = ApiFactory.apiService.getMovieDetails(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

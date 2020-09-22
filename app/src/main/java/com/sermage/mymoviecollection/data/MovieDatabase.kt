@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.sermage.mymoviecollection.pojo.Movie
 import com.sermage.mymoviecollection.pojo.TVShow
 
-@Database(entities = [Movie::class,TVShow::class], version = 4, exportSchema = false)
+@Database(entities = [Movie::class,TVShow::class], version = 7, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "movies.db"

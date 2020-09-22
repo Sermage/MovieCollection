@@ -3,6 +3,7 @@ package com.sermage.mymoviecollection.screens.ui.moviedetails
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
+import com.sermage.mymoviecollection.adapters.GenreAdapter
 import com.sermage.mymoviecollection.adapters.ReviewAdapter
 import com.sermage.mymoviecollection.adapters.TrailerAdapter
 import com.sermage.mymoviecollection.pojo.Movie
@@ -26,9 +29,10 @@ import java.util.*
 
 class MovieDetailsFragment : Fragment() {
 
-    private var movie:Movie?=null
+   private lateinit var movie: Movie
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var trailerAdapter: TrailerAdapter
+    private lateinit var genreAdapter: GenreAdapter
 
     private val favoritesViewModel:FavoritesViewModel by viewModels()
     private val movieDetailsViewModel:MovieDetailsViewModel by viewModels()
@@ -38,8 +42,10 @@ class MovieDetailsFragment : Fragment() {
         arguments?.let {
             movie=it.get(ARG_MOVIE) as Movie
         }
+        requireActivity().actionBar?.title=movie.title
         reviewAdapter= ReviewAdapter()
         trailerAdapter= TrailerAdapter()
+        genreAdapter= GenreAdapter()
     }
 
     override fun onCreateView(
@@ -62,28 +68,38 @@ class MovieDetailsFragment : Fragment() {
         val imageViewFavourite:ImageView =view.findViewById(R.id.imageViewFavourite)
         val recyclerViewReviews: RecyclerView =view.findViewById(R.id.recyclerViewReviews)
         val recyclerViewTrailers: RecyclerView =view.findViewById(R.id.recyclerViewTrailers)
+        val recyclerViewGenre:RecyclerView=view.findViewById(R.id.recyclerViewGenres)
+        recyclerViewGenre.adapter=genreAdapter
 
-        Picasso.get().load(IMAGE_PATH+BIG_POSTER_SIZE+movie?.posterPath).placeholder(R.drawable.waiting_for_loading_poster).into(imageViewBigPoster)
-        textViewTitle.text=movie?.title
-        textViewOriginalTitle.text=movie?.originalTitle
-        textViewOverview.text=movie?.overview
-        textViewRating.text=movie?.voteAverage.toString()
-        textViewReleaseDate.text=formatReleaseDate(movie?.releaseDate)
-        if(movie?.isFavorite==true){
+        Picasso.get().load(IMAGE_PATH+BIG_POSTER_SIZE+movie.posterPath).placeholder(R.drawable.waiting_for_loading_poster).into(imageViewBigPoster)
+        textViewTitle.text=movie.title
+        textViewOriginalTitle.text=movie.originalTitle
+        textViewOverview.text=movie.overview
+        textViewRating.text=movie.voteAverage.toString()
+        textViewReleaseDate.text=formatReleaseDate(movie.releaseDate)
+
+        movie.id?.let { movieDetailsViewModel.loadMovieDetails(it)}
+        movieDetailsViewModel.getMovieDetails().observe(viewLifecycleOwner,{ it ->
+            val genres=it.genres
+            genres?.let{genreAdapter.genres=it.toMutableList()}
+        })
+
+
+        if(movie.isFavorite==true){
             imageViewFavourite.setImageResource(R.drawable.ic_star_favourite_60dp)
         }else{
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp)
         }
-
+        //Добавление фильма в избранное
         imageViewFavourite.setOnClickListener {
-            if(movie?.isFavorite==false){
-                movie?.let { it1 -> favoritesViewModel.insertMovieToFavorites(it1) }
-                movie?.isFavorite=true
+            if(movie.isFavorite==false){
+                movie.let { it1 -> favoritesViewModel.insertMovieToFavorites(it1) }
+                movie.isFavorite=true
                 Toast.makeText(context, R.string.added_to_favourites, Toast.LENGTH_SHORT).show()
             }else{
-                movie?.let{
+                movie.let{
                     favoritesViewModel.deleteMovieFromFavorites(it)
-                    movie?.isFavorite=false
+                    movie.isFavorite=false
                     Toast.makeText(context, R.string.deleted_from_favourites, Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -92,7 +108,7 @@ class MovieDetailsFragment : Fragment() {
         }
         //Присоединяем отзывы
         recyclerViewReviews.adapter=reviewAdapter
-        movie?.id?.let { movieDetailsViewModel.loadReviews(it) }
+        movie.id?.let { movieDetailsViewModel.loadReviews(it) }
         movieDetailsViewModel.getReviews().observe(viewLifecycleOwner,{
             reviewAdapter.reviews=it
             if(it.isEmpty()){
@@ -102,7 +118,7 @@ class MovieDetailsFragment : Fragment() {
         //Присоединяем трейлеры
 
         recyclerViewTrailers.adapter=trailerAdapter
-        movie?.id?.let { movieDetailsViewModel.loadTrailers(it) }
+        movie.id?.let { movieDetailsViewModel.loadTrailers(it) }
         movieDetailsViewModel.getTrailers().observe(viewLifecycleOwner,{
             trailerAdapter.trailers=it
             if(it.isEmpty()){
@@ -119,7 +135,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setFavourite() {
-         val isFavorite=movie?.isFavorite
+         val isFavorite=movie.isFavorite
         if (isFavorite==false) {
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp)
         } else {

@@ -34,4 +34,7 @@
     <string name="for_kids">Для детей</string>
     <string name="no_reviews">Нет отзывов:(</string>
     <string name="no_video">Нет видео:(</string>
+    <string name="genres">Жанры</string>
+    <string name="title_of_searchmain">SEARCH</string>
+    <string name="hint_search_title">Movies, TV shows</string>
 </resources>

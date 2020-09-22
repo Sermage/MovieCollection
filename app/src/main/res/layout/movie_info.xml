@@ -108,6 +108,31 @@
         app:layout_constraintTop_toBottomOf="@id/textViewRating" />
 
     <TextView
+        android:id="@+id/textViewGenreTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textLabelStyle"
+        android:text="@string/genres"
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewOverview"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewGenres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textViewGenreTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+
+    <TextView
         android:id="@+id/textViewVideoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,7 +142,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewOverview"/>
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewGenres"/>
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -24,13 +24,13 @@ data class Movie (
         @Expose
         val posterPath: String? = null,
 
-        @SerializedName("genre_ids")
-        @Expose
-        val genreIds:List<Int>? =null,
-
         @SerializedName("backdrop_path")
         @Expose
         val backdropPath: String? = null,
+
+        @SerializedName("genre_ids")
+        @Expose
+        val genreIds:List<Int>?=null,
 
         @SerializedName("original_title")
         @Expose
@@ -52,6 +52,6 @@ data class Movie (
         @Expose
         val releaseDate: String? = null,
 
-        var isFavorite:Boolean?=false
+        var isFavorite:Boolean?=false,
 
 ) :Serializable
