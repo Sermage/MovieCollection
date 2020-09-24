@@ -5,20 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sermage.mymoviecollection.R
-import com.sermage.mymoviecollection.pojo.Movie
 import com.sermage.mymoviecollection.pojo.TVShow
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class TVShowAdapter:RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
-    inner class TVShowViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val imageViewMoviePoster=itemView.imageViewMoviePoster
-        val textViewRating=itemView.textViewRating
+class TVShowAdapter : RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
+    inner class TVShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageViewMoviePoster = itemView.imageViewMoviePoster
+        val textViewRating = itemView.textViewRating
     }
 
-    var tvShows= mutableListOf<TVShow>()
+    var tvShows = mutableListOf<TVShow>()
         set(value) {
-            field=value
+            field = value
             notifyDataSetChanged()
         }
     var posterListener: OnClickTVShowPosterListener? = null
@@ -38,7 +37,7 @@ class TVShowAdapter:RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
         val movie = tvShows[position]
         Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
             .into(holder.imageViewMoviePoster)
-        holder.textViewRating.text=movie.voteAverage.toString()
+        holder.textViewRating.text = movie.voteAverage.toString()
         if (tvShows.size >= 20 && position == tvShows.size - 4 && reachEndListener != null) {
             reachEndListener?.onReachEnd()
         }
@@ -50,6 +49,7 @@ class TVShowAdapter:RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
     override fun getItemCount(): Int {
         return tvShows.size
     }
+
     interface OnClickTVShowPosterListener {
         fun onClickTVShowPoster(position: Int)
     }
@@ -57,7 +57,8 @@ class TVShowAdapter:RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
     interface OnReachEndListener {
         fun onReachEnd()
     }
-    fun clear(){
+
+    fun clear() {
         tvShows.clear()
         notifyDataSetChanged()
     }

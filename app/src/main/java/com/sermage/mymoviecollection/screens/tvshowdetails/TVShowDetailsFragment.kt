@@ -1,4 +1,4 @@
-package com.sermage.mymoviecollection.screens.ui.tvshowdetails
+package com.sermage.mymoviecollection.screens.tvshowdetails
 
 import android.content.Intent
 import android.net.Uri
@@ -16,8 +16,8 @@ import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.ReviewAdapter
 import com.sermage.mymoviecollection.adapters.TrailerAdapter
 import com.sermage.mymoviecollection.pojo.TVShow
-import com.sermage.mymoviecollection.screens.ui.favorites.FavoritesViewModel
-import com.sermage.mymoviecollection.screens.ui.moviedetails.MovieDetailsFragment
+import com.sermage.mymoviecollection.screens.favorites.FavoritesViewModel
+import com.sermage.mymoviecollection.screens.moviedetails.MovieDetailsFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import java.text.ParseException

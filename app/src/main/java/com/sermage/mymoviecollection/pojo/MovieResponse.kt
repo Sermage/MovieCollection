@@ -3,20 +3,20 @@ package com.sermage.mymoviecollection.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class MovieResponse (
-        @SerializedName("page")
+class MovieResponse(
+    @SerializedName("page")
     @Expose
     val page: Int = 0,
 
-        @SerializedName("total_results")
+    @SerializedName("total_results")
     @Expose
     val totalResults: Int = 0,
 
-        @SerializedName("total_pages")
+    @SerializedName("total_pages")
     @Expose
     val totalPages: Int = 0,
 
-        @SerializedName("results")
+    @SerializedName("results")
     @Expose
     val results: List<Movie>? = null
 )

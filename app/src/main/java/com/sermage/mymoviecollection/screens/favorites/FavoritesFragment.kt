@@ -1,4 +1,4 @@
-package com.sermage.mymoviecollection.screens.ui.favorites
+package com.sermage.mymoviecollection.screens.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,12 +17,12 @@ class FavoritesFragment : Fragment() {
 
 
     private lateinit var favoritesCollectionAdapter: FavoritesViewPagerAdapter
-    private lateinit var viewPager:ViewPager2
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }

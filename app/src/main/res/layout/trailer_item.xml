@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="165dp"
-        android:layout_height="165dp"
-        android:layout_margin="8dp"
-        android:background="@color/background_darkGrey"
-        android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="165dp"
+    android:layout_height="165dp"
+    android:layout_margin="8dp"
+    android:background="@color/background_darkGrey"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageViewPlay"
@@ -38,5 +38,5 @@
         tools:text="Official Trailer" />
 
 
-    </LinearLayout>
+</LinearLayout>
 

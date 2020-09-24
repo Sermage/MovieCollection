@@ -1,4 +1,4 @@
-package com.sermage.mymoviecollection.screens.ui.tvshowdetails
+package com.sermage.mymoviecollection.screens.tvshowdetails
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

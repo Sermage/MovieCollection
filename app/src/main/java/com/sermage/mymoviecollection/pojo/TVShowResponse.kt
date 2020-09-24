@@ -3,7 +3,7 @@ package com.sermage.mymoviecollection.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class TVShowResponse (
+data class TVShowResponse(
     @SerializedName("page")
     @Expose
     val page: Int = 0,

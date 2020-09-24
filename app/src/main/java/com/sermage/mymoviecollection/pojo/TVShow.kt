@@ -12,7 +12,7 @@ import java.io.Serializable
 
 @Entity(tableName = "favorite_tv_shows")
 @TypeConverters(Converters::class)
-data class TVShow (
+data class TVShow(
     @SerializedName("original_name")
     @Expose
     val originalName: String? = null,
@@ -20,7 +20,7 @@ data class TVShow (
     @PrimaryKey
     @SerializedName("id")
     @Expose
-    val id:Int = 0,
+    val id: Int = 0,
 
     @SerializedName("name")
     @Expose
@@ -28,11 +28,11 @@ data class TVShow (
 
     @SerializedName("vote_count")
     @Expose
-    val voteCount:Int = 0,
+    val voteCount: Int = 0,
 
     @SerializedName("vote_average")
     @Expose
-    val voteAverage:Double = 0.0,
+    val voteAverage: Double = 0.0,
 
     @SerializedName("first_air_date")
     @Expose
@@ -64,7 +64,7 @@ data class TVShow (
 
     @SerializedName("popularity")
     @Expose
-    val popularity:Double = 0.0,
+    val popularity: Double = 0.0,
 
-    var isFavorite:Boolean?=false
-):Serializable
+    var isFavorite: Boolean? = false
+) : Serializable

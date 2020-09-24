@@ -4,7 +4,6 @@
     <string name="small_poster_description">Постер фильма</string>
     <string name="sort_by_popularity">По популярности</string>
     <string name="sort_by_rating">По рейтингу</string>
-    <string name="favourites_menu">Избранное</string>
     <string name="main_menu">Главная</string>
     <string name="movie_title">Название:</string>
     <string name="original_movie_title">Оригинальное название:</string>
@@ -18,7 +17,6 @@
     <string name="deleted_from_favourites">Удалено из Избранного</string>
     <string name="video_title">Видео</string>
     <string name="reviews_title">Отзывы</string>
-    <string name="Favorites_activity_label">Буду смотреть</string>
     <string name="hint_search">Поиск...</string>
     <string name="search_item_title">Поиск</string>
     <string name="read_more">Read more...</string>
@@ -35,6 +33,9 @@
     <string name="no_reviews">Нет отзывов:(</string>
     <string name="no_video">Нет видео:(</string>
     <string name="genres">Жанры</string>
-    <string name="title_of_searchmain">SEARCH</string>
-    <string name="hint_search_title">Movies, TV shows</string>
+    <string name="title_of_searchmain">ПОИСК</string>
+    <string name="watchlist">БУДУ СМОТРЕТЬ</string>
+    <string name="hint_search_title">Фильмы, сериалы</string>
+    <string name="title_tab_item_movies">Фильмы</string>
+    <string name="title_tab_item_tvshows">Сериалы</string>
 </resources>

@@ -10,7 +10,7 @@ import java.io.Serializable
 
 @Entity(tableName = "favorite_movies")
 @TypeConverters(Converters::class)
-data class Movie (
+data class Movie(
         @PrimaryKey
         @SerializedName("id")
         @Expose
@@ -30,7 +30,7 @@ data class Movie (
 
         @SerializedName("genre_ids")
         @Expose
-        val genreIds:List<Int>?=null,
+        val genreIds: List<Int>? = null,
 
         @SerializedName("original_title")
         @Expose
@@ -42,7 +42,7 @@ data class Movie (
 
         @SerializedName("vote_average")
         @Expose
-        val voteAverage: Double? =null,
+        val voteAverage: Double? = null,
 
         @SerializedName("overview")
         @Expose
@@ -52,6 +52,6 @@ data class Movie (
         @Expose
         val releaseDate: String? = null,
 
-        var isFavorite:Boolean?=false,
+        var isFavorite: Boolean? = false,
 
-) :Serializable
+        ) : Serializable

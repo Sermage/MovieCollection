@@ -9,18 +9,18 @@ import com.sermage.mymoviecollection.pojo.Movie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
-    inner class MovieHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val imageViewMoviePoster=itemView.imageViewMoviePoster
-        val textViewRating=itemView.textViewRating
+class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
+    inner class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageViewMoviePoster = itemView.imageViewMoviePoster
+        val textViewRating = itemView.textViewRating
 
     }
 
-    var movies= mutableListOf<Movie>()
-    set(value) {
-        field=value
-        notifyDataSetChanged()
-    }
+    var movies = mutableListOf<Movie>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var posterListener: OnClickMoviePosterListener? = null
     var reachEndListener: OnReachEndListener? = null
 
@@ -37,7 +37,7 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
         val movie = movies[position]
         Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
             .into(holder.imageViewMoviePoster)
-        holder.textViewRating.text=movie.voteAverage.toString()
+        holder.textViewRating.text = movie.voteAverage.toString()
         if (movies.size >= 20 && position == movies.size - 4 && reachEndListener != null) {
             reachEndListener?.onReachEnd()
         }
@@ -57,7 +57,8 @@ class MovieAdapter:RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
     interface OnReachEndListener {
         fun onReachEnd()
     }
-    fun clear(){
+
+    fun clear() {
         movies.clear()
         notifyDataSetChanged()
     }

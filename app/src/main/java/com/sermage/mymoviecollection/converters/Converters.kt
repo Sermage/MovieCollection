@@ -1,4 +1,5 @@
 package com.sermage.mymoviecollection.converters
+
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -8,7 +9,7 @@ class Converters {
     private val gson = Gson()
 
     @TypeConverter
-    fun intListToString(list:List<Int>): String {
+    fun intListToString(list: List<Int>): String {
         return gson.toJson(list)
     }
 
@@ -19,7 +20,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun stringListToString(list:List<String>): String {
+    fun stringListToString(list: List<String>): String {
         return gson.toJson(list)
     }
 

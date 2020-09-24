@@ -8,21 +8,21 @@ import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.pojo.Reviews
 import kotlinx.android.synthetic.main.review_item.view.*
 
-class ReviewAdapter:RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
-    inner class ReviewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
+    inner class ReviewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewAuthor = itemView.textViewAuthor
         val textViewContent = itemView.textViewContent
         val buttonSeeMore = itemView.buttonSeeMore
     }
 
-    var reviews= listOf<Reviews>()
-    set(value) {
-        field=value
-        notifyDataSetChanged()
-    }
+    var reviews = listOf<Reviews>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewHolder {
-        val view:View=LayoutInflater.from(parent.context).inflate(
+        val view: View = LayoutInflater.from(parent.context).inflate(
             R.layout.review_item,
             parent,
             false
@@ -52,6 +52,6 @@ class ReviewAdapter:RecyclerView.Adapter<ReviewAdapter.ReviewHolder>() {
     }
 
     override fun getItemCount(): Int {
-      return reviews.size
+        return reviews.size
     }
 }

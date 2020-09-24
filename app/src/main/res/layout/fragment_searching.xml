@@ -5,18 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_darkGrey"
-    tools:context=".screens.ui.search.MainSearchFragment">
+    tools:context=".screens.search.MainSearchFragment">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutForSearch"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_search"
-        android:textColorHint="@color/white_color"
-        app:iconifiedByDefault="false"
-        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextColor="@color/white_color"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/title_tab_item_movies" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/title_tab_item_tvshows" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -27,5 +39,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutForSearch" />
 </androidx.constraintlayout.widget.ConstraintLayout>

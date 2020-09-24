@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/watchlist"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/white_color"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

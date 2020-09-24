@@ -13,11 +13,11 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
         val textViewGenre = itemView.textViewGenre
     }
 
-    var genres= mutableListOf<Genre>()
-    set(value) {
-        field=value
-        notifyDataSetChanged()
-    }
+    var genres = mutableListOf<Genre>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view: View =
@@ -26,8 +26,8 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        val genre=genres[position]
-        holder.textViewGenre.text=genre.name
+        val genre = genres[position]
+        holder.textViewGenre.text = genre.name
     }
 
     override fun getItemCount(): Int {

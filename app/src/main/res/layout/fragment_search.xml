@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_darkGrey"
-    tools:context=".screens.ui.search.MainSearchFragment">
+    tools:context=".screens.search.MainSearchFragment">
 
     <TextView
         android:id="@+id/textViewTitle"

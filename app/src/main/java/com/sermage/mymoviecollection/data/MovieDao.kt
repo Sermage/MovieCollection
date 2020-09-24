@@ -9,7 +9,7 @@ import com.sermage.mymoviecollection.pojo.TVShow
 interface MovieDao {
 
     @Query("SELECT*FROM favorite_movies")
-    fun getFavoriteMovies():LiveData<List<Movie>>
+    fun getFavoriteMovies(): LiveData<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: Movie)
@@ -21,7 +21,7 @@ interface MovieDao {
     suspend fun getMovieById(movieId: Int): Movie
 
     @Query("SELECT*FROM favorite_tv_shows")
-    fun getFavoriteTVShows():LiveData<List<TVShow>>
+    fun getFavoriteTVShows(): LiveData<List<TVShow>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTVShow(tvShow: TVShow)
@@ -31,7 +31,6 @@ interface MovieDao {
 
     @Query("SELECT * FROM favorite_tv_shows WHERE id==:tvShowId")
     suspend fun getTVShowById(tvShowId: Int): TVShow
-
 
 
 }

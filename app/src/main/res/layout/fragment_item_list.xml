@@ -7,6 +7,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_darkGrey"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".screens.ui.favorites.FavoriteItemFragment"
+    tools:context=".screens.favorites.FavoriteItemFragment"
     tools:listitem="@layout/movie_item" />
