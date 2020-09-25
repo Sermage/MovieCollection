@@ -4,7 +4,6 @@
     <item android:title="@string/search_item_title"
         android:id="@+id/item_search"
         android:icon="@drawable/baseline_search_white_24"
-        android:menuCategory="secondary"
         app:showAsAction="always"
         android:enabled="true"
         app:actionViewClass="androidx.appcompat.widget.SearchView"

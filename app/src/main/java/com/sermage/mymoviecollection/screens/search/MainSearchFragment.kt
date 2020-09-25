@@ -12,11 +12,6 @@ import com.sermage.mymoviecollection.R
 
 class MainSearchFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.actionBar?.hide()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,8 +29,4 @@ class MainSearchFragment : Fragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        activity?.actionBar?.show()
-    }
 }

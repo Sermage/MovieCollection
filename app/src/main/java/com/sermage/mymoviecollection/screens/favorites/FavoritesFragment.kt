@@ -35,8 +35,8 @@ class FavoritesFragment : Fragment() {
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, pager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Фильмы"
-                1 -> tab.text = "Сериалы"
+                0 -> tab.text = getString(R.string.title_tab_item_movies)
+                1 -> tab.text = getString(R.string.title_tab_item_tvshows)
             }
         }.attach()
     }

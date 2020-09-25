@@ -21,8 +21,8 @@ class SearchingFragment : Fragment() {
 
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var tvShowAdapter: TVShowAdapter
-    private var searchView: SearchView? = null
     private lateinit var recyclerViewSearch: RecyclerView
+    private lateinit var tabLayout: TabLayout
     val searchableViewModel: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,44 @@ class SearchingFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
-        searchView = menu.findItem(R.id.item_search).actionView as SearchView
-        searchView?.queryHint = getString(R.string.hint_search)
-        searchView?.isIconified = false
-        searchView?.isFocusable = true
+        val searchView = menu.findItem(R.id.item_search).actionView as SearchView
+        searchView.queryHint = getString(R.string.hint_search)
+        searchView.isIconified = false
+        searchView.isFocusable = true
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    searchableViewModel.loadMovies(it)
+                    when (tabLayout.selectedTabPosition) {
+                        0 -> searchableViewModel.loadMovies(it)
+                        1 -> searchableViewModel.loadTvShows(it)
+                    }
+                }
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    movieAdapter.clear()
+                    searchableViewModel.loadMovies(it)
+                    when (tabLayout.selectedTabPosition) {
+                        0 -> {
+                            movieAdapter.clear()
+                            searchableViewModel.loadMovies(it)
+                        }
+                        1 -> {
+                            tvShowAdapter.clear()
+                            searchableViewModel.loadTvShows(it)
+                        }
+                    }
+                }
+                return true
+            }
+
+        })
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +86,8 @@ class SearchingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerViewSearch = view.findViewById(R.id.recyclerViewSearchable)
         recyclerViewSearch.layoutManager = GridLayoutManager(context, getColumnCount())
-
         searchingMovies(view)
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutForSearch)
+        tabLayout = view.findViewById(R.id.tabLayoutForSearch)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -89,23 +121,6 @@ class SearchingFragment : Fragment() {
             }
 
         }
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    searchableViewModel.loadMovies(it)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    movieAdapter.clear()
-                    searchableViewModel.loadMovies(newText)
-                }
-                return true
-            }
-
-        })
 
     }
 
@@ -124,23 +139,6 @@ class SearchingFragment : Fragment() {
             }
 
         }
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    searchableViewModel.loadTvShows(it)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    tvShowAdapter.clear()
-                    searchableViewModel.loadTvShows(newText)
-                }
-                return true
-            }
-
-        })
     }
 
 
