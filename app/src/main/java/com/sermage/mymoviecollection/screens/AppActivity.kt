@@ -1,6 +1,7 @@
 package com.sermage.mymoviecollection.screens
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -42,11 +43,12 @@ class AppActivity : AppCompatActivity() {
             )
         )
         supportActionBar?.elevation = 0F
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
+        supportActionBar?.title=""
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp()
     }
+
+
 }

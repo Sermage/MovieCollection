@@ -23,7 +23,7 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_favorites">Favorites</string>
-    <string name="Tranding">Tranding</string>
+    <string name="Tranding">Trending</string>
     <string name="movies">MOVIES</string>
     <string name="tv_shows">TV SHOWS</string>
     <string name="first_air_date">First air date:</string>
@@ -37,7 +37,16 @@
     <string name="watchlist">WATCHLIST</string>
     <string name="title_tab_item_movies">Movies</string>
     <string name="title_tab_item_tvshows">TV shows</string>
-
-
+    <string name="action_title">Action</string>
+    <string name="fantasy_title">Fantasy</string>
+    <string name="scifi_title">Science fiction</string>
+    <string name="comedy_title">Comedy</string>
+    <string name="horror_title">Horror</string>
+    <string name="war_title">War</string>
+    <string name="romance_title">Romance</string>
+    <string name="history_title">History</string>
+    <string name="crime_title">Crime</string>
+    <string name="adventure_title">Adventure</string>
+    <string name="image_of_loupe">imageOfLoupe</string>
 
 </resources>

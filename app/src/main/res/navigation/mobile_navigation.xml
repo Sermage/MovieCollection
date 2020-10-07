@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_navigation_search_to_searchingFragment"
             app:destination="@id/searchingFragment" />
+        <action
+            android:id="@+id/action_navigation_search_to_genreFragment"
+            app:destination="@id/genreFragment" />
     </fragment>
 
     <fragment
@@ -63,5 +66,14 @@
         <action
             android:id="@+id/action_searchingFragment_to_TVShowDetailsFragment"
             app:destination="@id/TVShowDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreFragment"
+        android:name="com.sermage.mymoviecollection.screens.search.GenreFragment"
+        android:label="fragment_genre"
+        tools:layout="@layout/fragment_genre" >
+        <action
+            android:id="@+id/action_genreFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>

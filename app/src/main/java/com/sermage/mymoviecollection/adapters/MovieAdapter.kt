@@ -35,8 +35,14 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val movie = movies[position]
-        Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
-            .into(holder.imageViewMoviePoster)
+        if(movie.posterPath!=null && movie.posterPath.isNotEmpty()){
+            Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
+                .into(holder.imageViewMoviePoster)
+            }else{
+            Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath).placeholder(R.drawable.no_poster)
+                .into(holder.imageViewMoviePoster)
+        }
+
         holder.textViewRating.text = movie.voteAverage.toString()
         if (movies.size >= 20 && position == movies.size - 4 && reachEndListener != null) {
             reachEndListener?.onReachEnd()

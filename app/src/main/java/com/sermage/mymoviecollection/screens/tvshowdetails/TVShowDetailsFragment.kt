@@ -16,6 +16,7 @@ import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.ReviewAdapter
 import com.sermage.mymoviecollection.adapters.TrailerAdapter
 import com.sermage.mymoviecollection.pojo.TVShow
+import com.sermage.mymoviecollection.screens.AppActivity
 import com.sermage.mymoviecollection.screens.favorites.FavoritesViewModel
 import com.sermage.mymoviecollection.screens.moviedetails.MovieDetailsFragment
 import com.squareup.picasso.Picasso
@@ -27,7 +28,7 @@ import java.util.*
 
 class TVShowDetailsFragment : Fragment() {
 
-    private var tvShow: TVShow? = null
+    private lateinit var tvShow: TVShow
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var trailerAdapter: TrailerAdapter
 
@@ -40,6 +41,8 @@ class TVShowDetailsFragment : Fragment() {
             tvShow = it.get(ARG_TVSHOW) as TVShow
 
         }
+        val appActivity = activity as AppActivity
+        appActivity.supportActionBar?.title = tvShow.name
         reviewAdapter= ReviewAdapter()
         trailerAdapter=TrailerAdapter()
     }
@@ -63,28 +66,28 @@ class TVShowDetailsFragment : Fragment() {
         val recyclerViewReviews: RecyclerView = view.findViewById(R.id.recyclerViewReviews)
         val recyclerViewTrailers: RecyclerView = view.findViewById(R.id.recyclerViewTrailers)
 
-        Picasso.get().load(IMAGE_PATH + BIG_POSTER_SIZE + tvShow?.posterPath)
+        Picasso.get().load(IMAGE_PATH + BIG_POSTER_SIZE + tvShow.posterPath)
             .placeholder(R.drawable.waiting_for_loading_poster).into(imageViewBigPoster)
-        textViewTitle.text = tvShow?.name
-        textViewOriginalTitle.text = tvShow?.originalName
-        textViewOverview.text = tvShow?.overview
-        textViewRating.text = tvShow?.voteAverage.toString()
-        textViewFirstAirDate.text = formatReleaseDate(tvShow?.firstAirDate)
-        if (tvShow?.isFavorite == true) {
+        textViewTitle.text = tvShow.name
+        textViewOriginalTitle.text = tvShow.originalName
+        textViewOverview.text = tvShow.overview
+        textViewRating.text = tvShow.voteAverage.toString()
+        textViewFirstAirDate.text = formatReleaseDate(tvShow.firstAirDate)
+        if (tvShow.isFavorite == true) {
             imageViewFavourite.setImageResource(R.drawable.ic_star_favourite_60dp)
         } else {
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp)
         }
 
         imageViewFavourite.setOnClickListener {
-            if (tvShow?.isFavorite == false) {
-                tvShow?.let { it1 -> favoritesViewModel.insertTVShowToFavorites(it1) }
-                tvShow?.isFavorite = true
+            if (tvShow.isFavorite == false) {
+                tvShow.let { it1 -> favoritesViewModel.insertTVShowToFavorites(it1) }
+                tvShow.isFavorite = true
                 Toast.makeText(context, R.string.added_to_favourites, Toast.LENGTH_SHORT).show()
             } else {
-                tvShow?.let {
+                tvShow.let {
                     favoritesViewModel.deleteTvShowFromFavorites(it)
-                    tvShow?.isFavorite = false
+                    tvShow.isFavorite = false
                     Toast.makeText(context, R.string.deleted_from_favourites, Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -93,13 +96,13 @@ class TVShowDetailsFragment : Fragment() {
         }
         //Присоединяем отзывы
         recyclerViewReviews.adapter = reviewAdapter
-        tvShow?.id?.let {tvShowViewModel.loadTVShowReviews(it) }
+        tvShow.id.let {tvShowViewModel.loadTVShowReviews(it) }
         tvShowViewModel.getReviews().observe(viewLifecycleOwner, {
             reviewAdapter.reviews = it
         })
         //Присоединяем трейлеры
         recyclerViewTrailers.adapter = trailerAdapter
-        tvShow?.id?.let { tvShowViewModel.loadTVShowTrailers(it) }
+        tvShow.id.let { tvShowViewModel.loadTVShowTrailers(it) }
         tvShowViewModel.getTrailers().observe(viewLifecycleOwner, {
             trailerAdapter.trailers = it
         })
@@ -114,7 +117,7 @@ class TVShowDetailsFragment : Fragment() {
 
 
     private fun setFavourite() {
-        val isFavorite = tvShow?.isFavorite
+        val isFavorite = tvShow.isFavorite
         if (isFavorite == false) {
             imageViewFavourite.setImageResource(R.drawable.ic_star_grey_60dp)
         } else {
@@ -152,5 +155,11 @@ class TVShowDetailsFragment : Fragment() {
             return result
         }
         return null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val appActivity = activity as AppActivity
+        appActivity.supportActionBar?.title = ""
     }
 }

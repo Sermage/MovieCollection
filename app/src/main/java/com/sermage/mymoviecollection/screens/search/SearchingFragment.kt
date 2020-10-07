@@ -15,6 +15,8 @@ import com.sermage.mymoviecollection.R
 import com.sermage.mymoviecollection.adapters.MovieAdapter
 import com.sermage.mymoviecollection.adapters.TVShowAdapter
 import com.sermage.mymoviecollection.screens.tvshowdetails.TVShowDetailsFragment
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_searching.*
 
 
 class SearchingFragment : Fragment() {
@@ -23,7 +25,9 @@ class SearchingFragment : Fragment() {
     private lateinit var tvShowAdapter: TVShowAdapter
     private lateinit var recyclerViewSearch: RecyclerView
     private lateinit var tabLayout: TabLayout
-    val searchableViewModel: SearchViewModel by viewModels()
+    private val searchableViewModel: SearchViewModel by viewModels()
+    private var isLoadingMovies = false
+    private var isLoadingTVShows = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,7 @@ class SearchingFragment : Fragment() {
         inflater.inflate(R.menu.main_menu, menu)
         val searchView = menu.findItem(R.id.item_search).actionView as SearchView
         searchView.queryHint = getString(R.string.hint_search)
+        //строка поиска открывается автоматически
         searchView.isIconified = false
         searchView.isFocusable = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -44,8 +49,33 @@ class SearchingFragment : Fragment() {
                 query?.let {
                     searchableViewModel.loadMovies(it)
                     when (tabLayout.selectedTabPosition) {
-                        0 -> searchableViewModel.loadMovies(it)
-                        1 -> searchableViewModel.loadTvShows(it)
+                        0 -> {
+                            searchableViewModel.loadMovies(it)
+                            //слушатель пролистывания до конца страницы
+                            movieAdapter.reachEndListener =
+                                object : MovieAdapter.OnReachEndListener {
+                                    override fun onReachEnd() {
+                                        if(!isLoadingMovies) {
+                                            searchableViewModel.loadMovies(it)
+                                        }
+
+                                    }
+
+                                }
+                        }
+                        1 -> {
+                            searchableViewModel.loadTvShows(it)
+                            tvShowAdapter.reachEndListener =
+                                object : TVShowAdapter.OnReachEndListener {
+                                    override fun onReachEnd() {
+                                        if(!isLoadingTVShows) {
+                                            searchableViewModel.loadTvShows(it)
+                                        }
+
+                                    }
+
+                                }
+                        }
                     }
                 }
 
@@ -54,16 +84,42 @@ class SearchingFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
+                    SearchViewModel.page=1
                     movieAdapter.clear()
+                    searchableViewModel.getSearchingMoviesList().clear()
                     searchableViewModel.loadMovies(it)
                     when (tabLayout.selectedTabPosition) {
                         0 -> {
+                            SearchViewModel.page=1
                             movieAdapter.clear()
+                            searchableViewModel.getSearchingMoviesList().clear()
                             searchableViewModel.loadMovies(it)
+                            movieAdapter.reachEndListener =
+                                object : MovieAdapter.OnReachEndListener {
+                                    override fun onReachEnd() {
+                                        if(!isLoadingMovies) {
+                                            searchableViewModel.loadMovies(it)
+                                        }
+
+                                    }
+
+                                }
                         }
                         1 -> {
+                            SearchViewModel.page=1
                             tvShowAdapter.clear()
+                            searchableViewModel.getSearchingTVShowList().clear()
                             searchableViewModel.loadTvShows(it)
+                            tvShowAdapter.reachEndListener =
+                                object : TVShowAdapter.OnReachEndListener {
+                                    override fun onReachEnd() {
+                                        if(!isLoadingTVShows) {
+                                            searchableViewModel.loadTvShows(it)
+                                        }
+
+                                    }
+
+                                }
                         }
                     }
                 }
@@ -104,7 +160,6 @@ class SearchingFragment : Fragment() {
 
             }
         })
-
     }
 
     private fun searchingMovies(view: View) {
@@ -121,6 +176,9 @@ class SearchingFragment : Fragment() {
             }
 
         }
+        searchableViewModel.getStatusOfLoadingMovies().observe(viewLifecycleOwner, {
+            setLoadingMovies(it)
+        })
 
     }
 
@@ -139,6 +197,9 @@ class SearchingFragment : Fragment() {
             }
 
         }
+        searchableViewModel.getStatusOfLoadingTV().observe(viewLifecycleOwner, {
+            setLoadingTV(it)
+        })
     }
 
 
@@ -147,6 +208,24 @@ class SearchingFragment : Fragment() {
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         val width = (displayMetrics.widthPixels / displayMetrics.density).toInt()
         return if (width / 115 > 2) width / 115 else 2
+    }
+
+    private fun setLoadingMovies(loading: Boolean) {
+        isLoadingMovies = loading
+        if (isLoadingMovies) {
+            progressBarSearchLoading.visibility = View.VISIBLE
+        } else {
+            progressBarSearchLoading.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setLoadingTV(loading: Boolean) {
+        isLoadingTVShows = loading
+        if (isLoadingTVShows) {
+            progressBarSearchLoading.visibility = View.VISIBLE
+        } else {
+            progressBarSearchLoading.visibility = View.INVISIBLE
+        }
     }
 
 

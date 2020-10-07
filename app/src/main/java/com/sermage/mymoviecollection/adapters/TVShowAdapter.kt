@@ -34,10 +34,15 @@ class TVShowAdapter : RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TVShowViewHolder, position: Int) {
-        val movie = tvShows[position]
-        Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + movie.posterPath)
-            .into(holder.imageViewMoviePoster)
-        holder.textViewRating.text = movie.voteAverage.toString()
+        val tvShow = tvShows[position]
+        if(tvShow.posterPath!=null && tvShow.posterPath.isNotEmpty()){
+            Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + tvShow.posterPath)
+                .into(holder.imageViewMoviePoster)
+        }else{
+            Picasso.get().load(IMAGE_PATH + SMALL_POSTER_SIZE + tvShow.posterPath).placeholder(R.drawable.no_poster)
+                .into(holder.imageViewMoviePoster)
+        }
+        holder.textViewRating.text = tvShow.voteAverage.toString()
         if (tvShows.size >= 20 && position == tvShows.size - 4 && reachEndListener != null) {
             reachEndListener?.onReachEnd()
         }

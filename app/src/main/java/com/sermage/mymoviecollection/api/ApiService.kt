@@ -27,6 +27,26 @@ interface ApiService {
         @Query(PARAM_SORT_BY) sort_by: String = SORT_BY_POPULARITY,
     ): Single<MovieResponse>
 
+    @GET("discover/movie")
+    fun getMoviesByGenre(
+        @Query(PARAM_KEY) apiKey: String = API_KEY,
+        @Query(PARAM_LANG) lang: String = LANG,
+        @Query(PAGE) page: Int = 1,
+        @Query(PARAM_VOTE_COUNT) voteCount: String = "1000",
+        @Query(PARAM_SORT_BY) sort_by: String = SORT_BY_POPULARITY,
+        @Query(PARAM_WITH_GENRES) genres:String="28"
+    ):Single<MovieResponse>
+
+    @GET("discover/tv")
+    fun getTVShowsByGenre(
+        @Query(PARAM_KEY) apiKey: String = API_KEY,
+        @Query(PARAM_LANG) lang: String = LANG,
+        @Query(PAGE) page: Int = 1,
+        @Query(PARAM_VOTE_COUNT) voteCount: String = "1000",
+        @Query(PARAM_SORT_BY) sort_by: String = SORT_BY_POPULARITY,
+        @Query(PARAM_WITH_GENRES) genres:String
+    ):Single<TVShowResponse>
+
     @GET("movie/{id}")
     fun getMovieDetails(
         @Path(PARAM_ID) id: Int,
@@ -59,14 +79,16 @@ interface ApiService {
     fun getSearchableMovies(
         @Query(PARAM_KEY) apiKey: String = API_KEY,
         @Query(PARAM_LANG) lang: String = LANG,
-        @Query(PARAM_QUERY) query: String
+        @Query(PARAM_QUERY) query: String,
+        @Query(PAGE) page: Int = 1,
     ): Single<MovieResponse>
 
     @GET("search/tv")
     fun getSearchableTVShows(
         @Query(PARAM_KEY) apiKey: String = API_KEY,
         @Query(PARAM_LANG) lang: String = LANG,
-        @Query(PARAM_QUERY) query: String
+        @Query(PARAM_QUERY) query: String,
+        @Query(PAGE) page: Int = 1,
     ): Single<TVShowResponse>
 
     @GET("trending/movie/{time_window}")
@@ -110,14 +132,13 @@ interface ApiService {
         private const val SORT_BY_VOTE_AVERAGE = "vote_average.desc"
         private const val API_KEY = ""
         private var LANG = Locale.getDefault().language
-        private const val PARAM_MEDIA_TYPE = "media_type"
         private const val PARAM_TIME_WINDOW = "time_window"
-        private const val MEDIA_TYPE = "movie"
         private const val TIME_WINDOW = "week"
         private const val PARAM_CERTIFICATION_COUNTRY = "certification_country"
         private const val CERTIFICATION_COUNTRY = "RU"
         private const val PARAM_CERTIFICATION = "certification"
         private const val CERTIFICATION = "0+"
+        private const val PARAM_WITH_GENRES="with_genres"
 
     }
 }

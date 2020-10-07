@@ -38,4 +38,14 @@
     <string name="hint_search_title">Фильмы, сериалы</string>
     <string name="title_tab_item_movies">Фильмы</string>
     <string name="title_tab_item_tvshows">Сериалы</string>
+    <string name="action_title">Боевик</string>
+    <string name="fantasy_title">Фэнтези</string>
+    <string name="scifi_title">Фантастика</string>
+    <string name="comedy_title">Комедия</string>
+    <string name="horror_title">Ужасы</string>
+    <string name="war_title">Военный</string>
+    <string name="romance_title">Романтика</string>
+    <string name="history_title">Исторический</string>
+    <string name="crime_title">Криминал</string>
+    <string name="adventure_title">Приключения</string>
 </resources>

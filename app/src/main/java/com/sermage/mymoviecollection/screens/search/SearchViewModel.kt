@@ -12,11 +12,25 @@ import io.reactivex.schedulers.Schedulers
 
 class SearchViewModel : ViewModel() {
 
+    companion object{
+       var page=1
+    }
+
     private val compositeDisposable = CompositeDisposable()
     private val searchableMovies = MutableLiveData<List<Movie>>()
     private val searchableTvShows = MutableLiveData<List<TVShow>>()
+    private val moviesByGenre=MutableLiveData<List<Movie>>()
+    private val tvShowsByGenre=MutableLiveData<List<TVShow>>()
+    private var isLoadingMovies=MutableLiveData<Boolean>()
+    private var isLoadingTVShow=MutableLiveData<Boolean>()
 
-    fun getSearchableMovies(): LiveData<List<Movie>> {
+    private var searchableMoviesList= mutableListOf<Movie>()
+    private var searchableTVShowList= mutableListOf<TVShow>()
+    private var moviesByGenreList= mutableListOf<Movie>()
+    private var tvShowByGenreList= mutableListOf<TVShow>()
+
+
+    fun getSearchableMovies(): MutableLiveData<List<Movie>> {
         return searchableMovies
     }
 
@@ -24,30 +38,96 @@ class SearchViewModel : ViewModel() {
         return searchableTvShows
     }
 
+    fun getMoviesByGenre():LiveData<List<Movie>>{
+        return moviesByGenre
+    }
+
+    fun getTVShowsByGenre():LiveData<List<TVShow>>{
+        return tvShowsByGenre
+    }
+
+    fun getStatusOfLoadingMovies():LiveData<Boolean>{
+        return isLoadingMovies
+    }
+    fun getStatusOfLoadingTV():LiveData<Boolean>{
+        return isLoadingTVShow
+    }
+
+    fun getSearchingMoviesList():MutableList<Movie>{
+        return searchableMoviesList
+    }
+    fun getSearchingTVShowList():MutableList<TVShow>{
+        return searchableTVShowList
+    }
+
     fun loadMovies(query: String) {
-        val disposable = ApiFactory.apiService.getSearchableMovies(query = query)
+        val loading = isLoadingMovies.value
+                if (loading != null && loading) {
+                    return
+                }
+        isLoadingMovies.postValue(true)
+        val disposable = ApiFactory.apiService.getSearchableMovies(query = query,page =page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                searchableMovies.value = it.results
+                isLoadingMovies.postValue(false)
+                it.results?.let { it1 -> searchableMoviesList.addAll(it1) }
+                searchableMovies.value = searchableMoviesList
+                page++
             }, {
-
+                isLoadingMovies.postValue(false)
             })
         compositeDisposable.add(disposable)
 
     }
 
     fun loadTvShows(query: String) {
-        val disposable = ApiFactory.apiService.getSearchableTVShows(query = query)
+        val loading = isLoadingTVShow.value
+        if (loading != null && loading) {
+            return
+        }
+        isLoadingTVShow.postValue(true)
+        val disposable = ApiFactory.apiService.getSearchableTVShows(query = query,page = page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                searchableTvShows.value = it.results
+                isLoadingTVShow.postValue(false)
+                it.results?.let { it1 -> searchableTVShowList.addAll(it1) }
+                searchableTvShows.value = searchableTVShowList
+                page++
             }, {
-
+                isLoadingTVShow.postValue(false)
             })
         compositeDisposable.add(disposable)
 
+    }
+
+    fun loadMoviesByGenre(genre:String){
+        val disposable=ApiFactory.apiService.getMoviesByGenre(genres=genre,page=page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.results?.let { it1 -> moviesByGenreList.addAll(it1) }
+                moviesByGenre.value=moviesByGenreList
+                page++
+            },{
+
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    fun loadTVShowsByGenre(genre:String){
+        val disposable=ApiFactory.apiService.getTVShowsByGenre(genres=genre,page=page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.results?.let { it1 -> tvShowByGenreList.addAll(it1) }
+                tvShowsByGenre.value=tvShowByGenreList
+                page++
+            },{
+
+            })
+        compositeDisposable.add(disposable)
     }
 
 

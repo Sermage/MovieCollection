@@ -17,6 +17,7 @@ import com.sermage.mymoviecollection.adapters.GenreAdapter
 import com.sermage.mymoviecollection.adapters.ReviewAdapter
 import com.sermage.mymoviecollection.adapters.TrailerAdapter
 import com.sermage.mymoviecollection.pojo.Movie
+import com.sermage.mymoviecollection.screens.AppActivity
 import com.sermage.mymoviecollection.screens.favorites.FavoritesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_details.*
@@ -40,7 +41,9 @@ class MovieDetailsFragment : Fragment() {
         arguments?.let {
             movie = it.get(ARG_MOVIE) as Movie
         }
-        requireActivity().actionBar?.title = movie.title
+
+        val appActivity = activity as AppActivity
+        appActivity.supportActionBar?.title = movie.title
         reviewAdapter = ReviewAdapter()
         trailerAdapter = TrailerAdapter()
         genreAdapter = GenreAdapter()
@@ -175,5 +178,9 @@ class MovieDetailsFragment : Fragment() {
         return null
     }
 
-
+    override fun onStop() {
+        super.onStop()
+        val appActivity = activity as AppActivity
+        appActivity.supportActionBar?.title = ""
+    }
 }

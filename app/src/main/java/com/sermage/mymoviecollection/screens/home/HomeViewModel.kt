@@ -175,7 +175,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 it.results?.let { it1 -> listOfKidMovies.addAll(it1) }
                 kidMovies.value = listOfKidMovies
                 page++
-
             }, {
                 isLoading.postValue(false)
                 errors.value = it

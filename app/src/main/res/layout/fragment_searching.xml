@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/background_darkGrey"
     tools:context=".screens.search.MainSearchFragment">
+    <ProgressBar
+        android:id="@+id/progressBarSearchLoading"
+        android:layout_width="@dimen/progressBar_size"
+        android:layout_height="@dimen/progressBar_size"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <com.google.android.material.tabs.TabLayout
